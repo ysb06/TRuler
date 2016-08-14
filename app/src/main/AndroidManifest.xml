@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="pe.hgs.truler">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".phase.analysis.ProfileSelection"
+            android:theme="@style/NoTitleBarActivity"/>
+        <activity
+            android:name=".phase.analysis.JointSetting"
+            android:theme="@style/NoTitleBarActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name=".phase.analysis.SubAssessment"
+            android:theme="@style/NoTitleBarActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".phase.analysis.FinalResult"/>
+        <activity android:name=".phase.others.MainMenu"/>
+        <activity android:name=".phase.analysis.ProfileGeneration">
+        </activity>
+    </application>
+
+</manifest>

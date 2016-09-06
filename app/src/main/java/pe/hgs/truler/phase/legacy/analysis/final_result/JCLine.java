@@ -1,8 +1,6 @@
-package pe.hgs.truler.phase.analysis.final_result;
+package pe.hgs.truler.phase.legacy.analysis.final_result;
 
 import java.util.NoSuchElementException;
-
-import pe.hgs.truler.tools.Logger;
 
 /**
  * Created by ysb06 on 2016-08-09.

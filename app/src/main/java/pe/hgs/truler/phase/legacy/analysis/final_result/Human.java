@@ -1,7 +1,6 @@
-package pe.hgs.truler.phase.analysis.final_result;
+package pe.hgs.truler.phase.legacy.analysis.final_result;
 
-import pe.hgs.truler.phase.analysis.JointSetting;
-import pe.hgs.truler.phase.analysis.joint_setting.JointView;
+import pe.hgs.truler.phase.legacy.analysis.JointSetting;
 
 /**
  * Created by ysb06 on 2016-08-09.

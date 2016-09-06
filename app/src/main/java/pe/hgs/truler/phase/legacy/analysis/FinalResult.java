@@ -1,4 +1,4 @@
-package pe.hgs.truler.phase.analysis;
+package pe.hgs.truler.phase.legacy.analysis;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import pe.hgs.truler.R;
-import pe.hgs.truler.phase.analysis.final_result.Human;
+import pe.hgs.truler.phase.legacy.analysis.final_result.Human;
 
 public class FinalResult extends AppCompatActivity {
 

@@ -4,6 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="app_size_joint_guide">20sp</dimen> <!-- 관절 선택 부분 안내 글자 크기 -->
-    <dimen name="app_size_assessment_state">50sp</dimen> <!-- 평가 부분 -->
+    <dimen name="app_size_assessment_state">30sp</dimen> <!-- 평가 부분 -->
     <dimen name="app_size_assessment_guide">40sp</dimen>
 </resources>

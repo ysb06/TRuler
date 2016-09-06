@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".phase.analysis.JointSetting">
+    tools:context=".phase.legacy.analysis.JointSetting">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -24,13 +24,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_text_guide_joint01"
+        android:text="@string/layout_jointselection_textview_guide_01"
         android:id="@+id/textGuide"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/app_size_joint_guide"/>
 
-    <pe.hgs.truler.phase.analysis.joint_setting.JointView
+    <pe.hgs.truler.tools.view.JointView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cView"

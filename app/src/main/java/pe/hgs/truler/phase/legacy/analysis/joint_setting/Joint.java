@@ -1,4 +1,4 @@
-package pe.hgs.truler.phase.analysis.joint_setting;
+package pe.hgs.truler.phase.legacy.analysis.joint_setting;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

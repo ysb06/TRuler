@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".phase.analysis.SubAssessment">
+    tools:context=".phase.legacy.analysis.SubAssessment">
 
 
     <LinearLayout
@@ -45,17 +45,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_text_guide_assessment_upper"
+        android:text="@string/layout_jointrevision_textview_upper"
         android:id="@+id/txtState"
         android:textSize="@dimen/app_size_assessment_state"
-        android:layout_above="@+id/txtGuide"
+        android:layout_above="@+id/button_jr_yes"
         android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_text_guide_assessment"
-        android:id="@+id/txtGuide"
+        android:text="@string/layout_jointrevision_textview_guide_01"
+        android:id="@+id/button_jr_yes"
         android:textSize="@dimen/app_size_joint_guide"
         android:layout_above="@+id/btContainter"
         android:layout_centerHorizontal="true"/>
@@ -71,13 +71,13 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_button_yes"
+            android:text="@string/layout_jointrevision_textview_yes"
             android:id="@+id/btYes"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_button_no"
+            android:text="@string/layout_jointrevision_textview_no"
             android:id="@+id/btNo"/>
 
     </LinearLayout>

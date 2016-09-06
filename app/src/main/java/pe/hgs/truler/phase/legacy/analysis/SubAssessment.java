@@ -1,4 +1,4 @@
-package pe.hgs.truler.phase.analysis;
+package pe.hgs.truler.phase.legacy.analysis;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -86,7 +86,7 @@ public class SubAssessment extends AppCompatActivity implements View.OnClickList
 					Logger.error("Unknown assessment error");
 
 				//----- 상지 평가 완료 -----//
-				txtState.setText(R.string.app_text_guide_assessment_lower);
+				txtState.setText(R.string.layout_jointrevision_textview_lower);
 				iState = STATE_LOWER;
 				break;
 			case STATE_LOWER:

@@ -1,4 +1,4 @@
-package pe.hgs.truler.phase.others;
+package pe.hgs.truler.phase.legacy.others;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package pe.hgs.truler.phase.analysis;
+package pe.hgs.truler.phase.legacy.analysis;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import pe.hgs.truler.R;
-import pe.hgs.truler.phase.analysis.joint_setting.Joint;
-import pe.hgs.truler.phase.analysis.joint_setting.JointView;
-import pe.hgs.truler.phase.analysis.joint_setting.JointViewListener;
+import pe.hgs.truler.phase.legacy.analysis.joint_setting.Joint;
+import pe.hgs.truler.tools.view.JointView;
+import pe.hgs.truler.tools.view.JointViewListener;
 import pe.hgs.truler.tools.ImageLoader;
 import pe.hgs.truler.tools.Logger;
 
@@ -62,8 +62,8 @@ public class JointSetting extends AppCompatActivity implements JointViewListener
 
 		initScreen();
 		initJointPoint();
-		cvDotLayer.setJointPoint(jointPoints);
-		cvDotLayer.setListener(this);
+		//cvDotLayer.setJointPoint(jointPoints);
+		cvDotLayer.addListener(this);
     }
 
 	@Override
@@ -112,35 +112,40 @@ public class JointSetting extends AppCompatActivity implements JointViewListener
 	public void onJointSettingCompleted() {
 		//// TODO: 2016-08-08 추후 입력 취소 기능을 넣을 수 있음
 		iNextInput++;
-		cvDotLayer.requestJointPoint(iNextInput);
+		//cvDotLayer.requestJointPoint(iNextInput);
 		switch (iNextInput) {
 			case SHOULDER:
-				txtGuide.setText(R.string.app_text_guide_joint02);
+				txtGuide.setText(R.string.layout_jointselection_textview_guide_02);
 				break;
 			case ELBOW:
-				txtGuide.setText(R.string.app_text_guide_joint03);
+				txtGuide.setText(R.string.layout_jointselection_textview_guide_03);
 				break;
 			case WRIST:
-				txtGuide.setText(R.string.app_text_guide_joint04);
+				txtGuide.setText(R.string.layout_jointselection_textview_guide_04);
 				break;
 			case WAIST:
-				txtGuide.setText(R.string.app_text_guide_joint05);
+				txtGuide.setText(R.string.layout_jointselection_textview_guide_05);
 				break;
 			case KNEE:
-				txtGuide.setText(R.string.app_text_guide_joint06);
+				txtGuide.setText(R.string.layout_jointselection_textview_guide_06);
 				break;
 			case FOOT:
-				txtGuide.setText(R.string.app_text_guide_joint07);
+				txtGuide.setText(R.string.layout_jointselection_textview_guide_07);
 				break;
 			default:
 				if(iNextInput > 6) {
-					txtGuide.setText(R.string.app_text_guide_final);
+					txtGuide.setText(R.string.layout_jointselection_textview_guide_08);
 					btFinish.setVisibility(View.VISIBLE);
 				}
 				else
 					Logger.error("iNextInput in wrong number");
 				break;
 		}
+	}
+
+	@Override
+	public void onJointSelected(pe.hgs.truler.tools.container.Joint joint, int count) {
+
 	}
 
 	@Override

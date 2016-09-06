@@ -4,24 +4,75 @@
     신체 각 부위가 이루는 각도를 측정하고 그 사람의 자세를 분석하여 올바른 자세인지 여부를 확인하는 것을 목표로 하고 있습니다.
     \n\n이 메시지가 보이는 경우 현재 Application이 정상 작동하지 않는 것을 의미하므로 관리자에게 문의 바랍니다.</string>
 
-    <string name="app_text_guide_joint01">머리를 선택해 주십시오</string>
-    <string name="app_text_guide_joint02">어깨를 선택해 주십시오</string>
-    <string name="app_text_guide_joint03">팔꿈치를 선택해 주십시오</string>
-    <string name="app_text_guide_joint04">손목을 선택해 주십시오</string>
-    <string name="app_text_guide_joint05">허리를 선택해 주십시오</string>
-    <string name="app_text_guide_joint06">무릎을 선택해 주십시오</string>
-    <string name="app_text_guide_joint07">발을 선택해 주십시오</string>
-    <string name="app_text_guide_final">선택이 완료되었습니다</string>
-
-    <string name="app_text_guide_assessment_upper">상지</string>
-    <string name="app_text_guide_assessment_lower">하지</string>
-    <string name="app_text_guide_assessment">자세 선택이 올바릅니까?</string>
-
-    <string name="app_button_finish">완료(다음 단계)</string>
-    <string name="app_button_yes">예</string>
-    <string name="app_button_no">아니오</string>
-
     <string name="app_text_description_iv01">Sample</string>
     <string name="app_text_description_iv02">Target</string>
+
+    <string name="app_button_finish">완료(다음 단계)</string>
+
+    <string name="layout_taskinfo_button_next_01">카메라 촬영</string>
+    <string name="layout_taskinfo_button_next_02">저장된 이미지 선택</string>
+    <string name="layout_taskinfo_textview_guide_01">정보를 입력해 주세요</string>
+    <string name="layout_taskinfo_textview_guide_02">다음 단계</string>
+    <string name="layout_taskinfo_textview_param_name_01">작업자</string>
+    <string name="layout_taskinfo_textview_param_name_02">작목</string>
+    <string name="layout_taskinfo_textview_param_name_03">작업</string>
+    <string name="layout_taskinfo_textview_param_name_04">세부작업</string>
+    <string name="layout_taskinfo_textview_param_name_05">지역</string>
+    <string name="layout_taskinfo_textview_param_name_06">유지시간</string>
+    <string name="layout_taskinfo_textview_param_name_07">분석자</string>
+    <string name="layout_taskinfo_textview_param_guide_01">분(min.)</string>
+
+    <string name="layout_jointselection_textview_guide_01">머리를 선택해 주십시오</string>
+    <string name="layout_jointselection_textview_guide_02">어깨를 선택해 주십시오</string>
+    <string name="layout_jointselection_textview_guide_03">팔꿈치를 선택해 주십시오</string>
+    <string name="layout_jointselection_textview_guide_04">손목을 선택해 주십시오</string>
+    <string name="layout_jointselection_textview_guide_05">허리를 선택해 주십시오</string>
+    <string name="layout_jointselection_textview_guide_06">무릎을 선택해 주십시오</string>
+    <string name="layout_jointselection_textview_guide_07">발을 선택해 주십시오</string>
+    <string name="layout_jointselection_textview_guide_08">선택이 완료되었습니다</string>
+
+    <string name="layout_jointrevision_textview_upper">상지</string>
+    <string name="layout_jointrevision_textview_lower">하지</string>
+    <string name="layout_jointrevision_textview_guide_01">자세 선택이 올바릅니까?</string>
+    <string name="layout_jointrevision_textview_yes">예</string>
+    <string name="layout_jointrevision_textview_no">아니오</string>
+
+    <string name="layout_result_button_law">예방법</string>
+    <string name="layout_result_button_exercise">예방체조</string>
+    <string name="layout_result_button_summary">종합</string>
+    <string name="layout_result_button_upper">상지</string>
+    <string name="layout_result_button_lower">하지</string>
+
+    <string name="test_risk_01">1</string>
+    <string name="test_risk_02">2</string>
+    <string name="test_risk_03">3</string>
+    <string name="test_risk_04">4</string>
+    <string name="test_position_upper_01">B0-S0-E45</string>
+    <string name="test_position_upper_02">B0-S0-E90</string>
+    <string name="test_position_upper_03">B0-S45-E0</string>
+    <string name="test_position_upper_04">B0-S45-E45</string>
+    <string name="test_position_upper_05">B0-S45-E90</string>
+    <string name="test_position_upper_06">B0-S90-E45</string>
+    <string name="test_position_upper_07">B0-S90-E90</string>
+    <string name="test_position_upper_08">B0-S120-E0</string>
+    <string name="test_position_upper_09">B45-S45-E0</string>
+    <string name="test_position_upper_10">B45-S45-E45</string>
+    <string name="test_position_upper_11">B45-S90-E0</string>
+    <string name="test_position_upper_12">B45-S90-E45</string>
+    <string name="test_position_upper_13">B90-S90-E0</string>
+    <string name="test_position_upper_14">B90-S90-E45</string>
+    <string name="test_position_lower_01">STD</string>
+    <string name="test_position_lower_02">KF150</string>
+    <string name="test_position_lower_03">KF120</string>
+    <string name="test_position_lower_04">KF90</string>
+    <string name="test_position_lower_05">KF60</string>
+    <string name="test_position_lower_06">KF30</string>
+    <string name="test_position_lower_07">KF30C</string>
+    <string name="test_position_lower_08">KNL_1</string>
+    <string name="test_position_lower_09">KNL_2</string>
+    <string name="test_position_lower_10">SF_CRS</string>
+    <string name="test_position_lower_11">SC0</string>
+    <string name="test_position_lower_12">SC20</string>
+    <string name="test_position_lower_13">SC40</string>
 
 </resources>

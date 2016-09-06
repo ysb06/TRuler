@@ -12,7 +12,21 @@ public class Logger {
 	 * @param msg 출력할 메시지
 	 */
 	public static void debug(String msg) {
-		Log.d("CM_MainActivity", msg);
+		if(msg.length() != 0)
+			Log.d("CM_Message", msg);
+		else
+			Log.w("CM_Warning", "(No Value)");
+	}
+
+	/** 디버그 수준으로 로그 출력
+	 *
+	 * @param msg 출력할 메시지
+	 */
+	public static void debug(Class caller, String msg) {
+		if(msg.length() != 0)
+			Log.d("CM_Message(" + caller.getName() + ")", msg);
+		else
+			Log.w("CM_Warning(" + caller.getName() + ")", "(No Value)");
 	}
 
 	/** 주의 수준으로 로그 출력
@@ -20,7 +34,21 @@ public class Logger {
 	 * @param msg 출력할 메시지
 	 */
 	public static void warn(String msg) {
-		Log.w("CM_MainActivity", msg);
+		if(msg.length() != 0)
+			Log.w("CM_Warning", msg);
+		else
+			Log.w("CM_Warning", "(No Value)");
+	}
+
+	/** 주의 수준으로 로그 출력
+	 *
+	 * @param msg 출력할 메시지
+	 */
+	public static void warn(Class caller, String msg) {
+		if(msg.length() != 0)
+			Log.w("CM_Warning(" + caller.getName() + ")", msg);
+		else
+			Log.w("CM_Warning(" + caller.getName() + ")", "(No Value)");
 	}
 
 	/** 에러 수준으로 로그 출력
@@ -28,6 +56,20 @@ public class Logger {
 	 * @param msg 출력할 메시지
 	 */
 	public static void error(String msg) {
-		Log.e("CM_MainActivity", msg);
+		if(msg.length() != 0)
+			Log.e("CM_Error", msg);
+		else
+			Log.e("CM_Error", "(No Value)");
+	}
+
+	/** 에러 수준으로 로그 출력
+	 *
+	 * @param msg 출력할 메시지
+	 */
+	public static void error(Class caller, String msg) {
+		if(msg.length() != 0)
+			Log.e("CM_Error(" + caller.getName() + ")", msg);
+		else
+			Log.e("CM_Error(" + caller.getName() + ")", "(No Value)");
 	}
 }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import pe.hgs.truler.phase.Phase;
 import pe.hgs.truler.phase.ResultFinal;
 import pe.hgs.truler.phase.legacy.analysis.SubAssessment;
+import pe.hgs.truler.phase.legacy.others.MainMenu;
 import pe.hgs.truler.tools.Logger;
 
 /** 액티비티 전환 관리 */
@@ -20,15 +21,28 @@ public class MainActivity extends AppCompatActivity {
 	private float[] fxTemp;
 	private float[] fyTemp;
 
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent itPhaseLast = new Intent(this, ResultFinal.class);
-        startActivity(itPhaseLast);
+		Intent intent = new Intent(this, MainMenu.class);
+		startActivityForResult(intent, Phase.PHASE_MAIN);
+
 		Logger.debug("MainActivity OnCreate");
     }
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if(resultCode == RESULT_OK) {
+			Intent itPhaseLast = new Intent(this, ResultFinal.class);
+			startActivity(itPhaseLast);
+		} else if(resultCode == RESULT_CANCELED) {
+
+		}
+	}
 
 
 

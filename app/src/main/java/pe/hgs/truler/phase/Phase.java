@@ -11,4 +11,5 @@ public interface Phase {
     int PHASE_JOINT_SELECTION = 3;
     int PHASE_REVISION = 4;
     int PHASE_RESULT = 5;
+    int PHASE_MAIN = 6;
 }

@@ -77,7 +77,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/layout_jointrevision_textview_no"
+            android:text="@string/layout_jointrevision_textview_next"
             android:id="@+id/btNo"/>
 
     </LinearLayout>

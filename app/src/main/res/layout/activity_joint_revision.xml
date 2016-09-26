@@ -20,12 +20,45 @@
             android:id="@+id/image_jr_target"
             android:layout_weight="1"/>
 
-        <ImageView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/image_jr_sample"
-            android:layout_weight="1"
-            android:src="@drawable/upper01"/>
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/image_jr_sample"
+                android:layout_weight="1"
+                android:src="@drawable/upper01"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/layout_jointrevision_textview_prev"
+                    android:id="@+id/button_jr_prev"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/layout_jointrevision_textview_next"
+                    android:id="@+id/button_jr_next"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -59,13 +92,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/layout_jointrevision_textview_no"
-            android:id="@+id/button_jr_no"/>
 
         <Button
             android:layout_width="wrap_content"

@@ -1,13 +1,12 @@
 <resources>
-    <string name="app_name">TRuler</string>
+    <string name="app_name">농작업 자세 위험 평가</string>
+
     <string name="app_text_comment01">이 Application은 사진에서 어떠한 사람을 대상으로
     신체 각 부위가 이루는 각도를 측정하고 그 사람의 자세를 분석하여 올바른 자세인지 여부를 확인하는 것을 목표로 하고 있습니다.
     \n\n이 메시지가 보이는 경우 현재 Application이 정상 작동하지 않는 것을 의미하므로 관리자에게 문의 바랍니다.</string>
 
     <string name="app_text_description_iv01">Sample</string>
     <string name="app_text_description_iv02">Target</string>
-
-    <string name="app_button_finish">완료(다음 단계)</string>
 
     <string name="layout_taskinfo_button_next_01">카메라 촬영</string>
     <string name="layout_taskinfo_button_next_02">저장된 이미지 선택</string>
@@ -22,6 +21,8 @@
     <string name="layout_taskinfo_textview_param_name_07">분석자</string>
     <string name="layout_taskinfo_textview_param_guide_01">분(min.)</string>
 
+    <string name="layout_jointselection_button_finish">완료(다음 단계)</string>
+    <string name="layout_jointselection_button_finish_rotate">사진 회전</string>
     <string name="layout_jointselection_textview_guide_01">머리를 선택해 주십시오</string>
     <string name="layout_jointselection_textview_guide_02">어깨를 선택해 주십시오</string>
     <string name="layout_jointselection_textview_guide_03">팔꿈치를 선택해 주십시오</string>
@@ -35,7 +36,8 @@
     <string name="layout_jointrevision_textview_lower">하지</string>
     <string name="layout_jointrevision_textview_guide_01">자세 선택이 올바릅니까?</string>
     <string name="layout_jointrevision_textview_yes">예</string>
-    <string name="layout_jointrevision_textview_no">아니오</string>
+    <string name="layout_jointrevision_textview_prev">이전</string>
+    <string name="layout_jointrevision_textview_next">다음</string>
 
     <string name="layout_result_button_law">예방법</string>
     <string name="layout_result_button_exercise">예방체조</string>
@@ -43,6 +45,12 @@
     <string name="layout_result_button_upper">상지</string>
     <string name="layout_result_button_lower">하지</string>
 
+    <string-array name="layout_result_spinner_list">
+        <item>정보 입력</item>
+        <item>관절 선택</item>
+        <item>자세 선택</item>
+    </string-array>
+    
     <string name="test_risk_01">1</string>
     <string name="test_risk_02">2</string>
     <string name="test_risk_03">3</string>
@@ -74,5 +82,17 @@
     <string name="test_position_lower_11">SC0</string>
     <string name="test_position_lower_12">SC20</string>
     <string name="test_position_lower_13">SC40</string>
+
+    <string name="comment_upper_01">팔꿈치 부담 작업</string>
+    <string name="comment_upper_02">어깨 부담 작업</string>
+    <string name="comment_upper_03">어깨, 팔꿈치 부담 작업</string>
+    <string name="comment_upper_04">허리 부담 작업</string>
+    <string name="comment_upper_05">허리 어깨 부담 작업</string>
+    <string name="comment_upper_06">허리, 팔꿈치 부담 작업</string>
+
+    <string name="comment_lower_01">무릎 부담 작업</string>
+    <string name="comment_lower_02">무릎, 허리 부담 작업</string>
+    <string name="comment_lower_03">허리 부담 작업</string>
+    <string name="comment_lower_04">발목 부담 작업</string>
 
 </resources>

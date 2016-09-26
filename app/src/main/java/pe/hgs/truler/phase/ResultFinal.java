@@ -1,18 +1,25 @@
 package pe.hgs.truler.phase;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Canvas;
-import android.graphics.Color;
+import android.net.Uri;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import pe.hgs.truler.R;
+import pe.hgs.truler.phase.subphase.PreventionGuide;
+import pe.hgs.truler.phase.subphase.PreventionVideo;
+import pe.hgs.truler.tools.LogWindow;
 import pe.hgs.truler.tools.Logger;
 import pe.hgs.truler.tools.view.ResultView;
 
@@ -31,16 +38,13 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 	private int iWorkTime = 0;
 
 	private State state = State.SUMMARY;
-	private int iCurrentOrientation = 0;
 	private Button btState01;
 	private Button btState02;
+	private Button btState03;
+	private Button btLaw;
+	private Button btexer;
 	private ResultView rvResult;
-
-	private TextView textRiskName;
-	private TextView[] textRiskTypes;
-	private TextView[] textResults;
-	private Button btNext;
-	private Button btPrev;
+	private TextView textComment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,26 +56,16 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 
 		btState01 = (Button) findViewById(R.id.button_rf_status_01);
 		btState02 = (Button) findViewById(R.id.button_rf_status_02);
+		btState03 = (Button) findViewById(R.id.button_rf_status_03);
 		btState01.setOnClickListener(this);
 		btState02.setOnClickListener(this);
+		btState03.setOnClickListener(this);
+		btLaw = (Button) findViewById(R.id.button_rf_upper_law);
+		btexer = (Button) findViewById(R.id.button_rf_upper_exercise);
+		btLaw.setOnClickListener(this);
+		btexer.setOnClickListener(this);
 		rvResult = (ResultView) findViewById(R.id.image_rf_result);
-		/*
-		textRiskName = getTextView(R.id.text_rf_temp_guide_08);
-		textRiskTypes = new TextView[4];
-		textRiskTypes[0] = getTextView(R.id.text_rf_temp_guide_03);
-		textRiskTypes[1] = getTextView(R.id.text_rf_temp_guide_04);
-		textRiskTypes[2] = getTextView(R.id.text_rf_temp_guide_05);
-		textRiskTypes[3] = getTextView(R.id.text_rf_temp_guide_06);
-		textResults = new TextView[4];
-		textResults[0] = getTextView(R.id.text_rf_temp_result_01);
-		textResults[1] = getTextView(R.id.text_rf_temp_result_02);
-		textResults[2] = getTextView(R.id.text_rf_temp_result_03);
-		textResults[3] = getTextView(R.id.text_rf_temp_result_04);
-		btNext = (Button) findViewById(R.id.button_rf_temp_next);
-		btPrev = (Button) findViewById(R.id.button_rf_temp_prev);
-		btNext.setOnClickListener(this);
-		btPrev.setOnClickListener(this);
-		//*/
+		textComment = (TextView) findViewById(R.id.text_rf_comment);
 	}
 
 	@Override
@@ -91,6 +85,27 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 				Logger.error("Unknown State");
 				break;
 		}
+	}
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.resultfinal, menu);
+		setTitle("결과");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_rf_show:
+				Intent itLog = new Intent(this, LogWindow.class);
+				startActivity(itLog);
+				break;
+			default:
+				break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -116,6 +131,7 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 			textResults[iUpperRisk - 1].setText("위험수준 " + iUpperTimeRisk + "단계");
 			//*/
 			setStateAsSummary(this.getResources().getConfiguration().orientation);
+			setComment();
 		} else if(requestCode == Phase.PHASE_REVISION && resultCode == RESULT_CANCELED) {
 			finish();
 		}
@@ -130,26 +146,21 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 
 		switch (view.getId()) {
 			case R.id.button_rf_status_01:
-				switch (state) {
-					case UPPER:
-					case LOWER:
-						setStateAsSummary(this.getResources().getConfiguration().orientation);
-						break;
-					case SUMMARY:
-						setStateAsUpper(this.getResources().getConfiguration().orientation);
-						break;
-				}
+				setStateAsSummary(this.getResources().getConfiguration().orientation);
 				break;
 			case R.id.button_rf_status_02:
-				switch (state) {
-					case SUMMARY:
-					case UPPER:
-						setStateAsLower(this.getResources().getConfiguration().orientation);
-						break;
-					case LOWER:
-						setStateAsUpper(this.getResources().getConfiguration().orientation);
-						break;
-				}
+				setStateAsUpper(this.getResources().getConfiguration().orientation);
+				break;
+			case R.id.button_rf_status_03:
+				setStateAsLower(this.getResources().getConfiguration().orientation);
+				break;
+			case R.id.button_rf_upper_law:
+				Intent itGuide = new Intent(this, PreventionGuide.class);
+				startActivity(itGuide);
+				break;
+			case R.id.button_rf_upper_exercise:
+				Intent itVideo = new Intent(this, PreventionVideo.class);
+				startActivity(itVideo);
 				break;
 			default:
 				Logger.error("Unknown Button");
@@ -186,8 +197,6 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 
 	private void setStateAsSummary(int orientation) {
 		state = State.SUMMARY;
-		btState01.setText(R.string.layout_result_button_upper);
-		btState02.setText(R.string.layout_result_button_lower);
 		if(orientation == Configuration.ORIENTATION_PORTRAIT) {
 			rvResult.setImageResource(R.drawable.tables);
 		} else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -195,13 +204,11 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 		} else {
 			Logger.error("Unknown Orientation");
 		}
-		rvResult.showSummaryMark(iUpperRisk, iLowerRisk, orientation);
+		rvResult.setToSummary(iUpperRisk, iLowerRisk, orientation);
 	}
 
 	private void setStateAsUpper(int orientation) {
 		state = State.UPPER;
-		btState01.setText(R.string.layout_result_button_summary);
-		btState02.setText(R.string.layout_result_button_lower);
 		if(orientation == Configuration.ORIENTATION_PORTRAIT) {
 			rvResult.setImageResource(R.drawable.tableu);
 		} else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -209,13 +216,11 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 		} else {
 			Logger.error("Unknown Orientation");
 		}
-		rvResult.showUpperMark(sUpperName, iUpperTimeRisk, orientation);
+		rvResult.setToUpper(sUpperName, iUpperTimeRisk, orientation);
 	}
 
 	private void setStateAsLower(int orientation) {
 		state = State.LOWER;
-		btState01.setText(R.string.layout_result_button_summary);
-		btState02.setText(R.string.layout_result_button_upper);
 		if(orientation == Configuration.ORIENTATION_PORTRAIT) {
 			rvResult.setImageResource(R.drawable.tablel);
 		} else if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -223,6 +228,41 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 		} else {
 			Logger.error("Unknown Orientation -> " + orientation);
 		}
-		rvResult.showLowerMark(sLowerName, iLowerTimeRisk, orientation);
+		rvResult.setToLower(sLowerName, iLowerTimeRisk, orientation);
+	}
+
+
+	private void setComment() {
+		String str = "상지 : ";
+		if(sUpperName.equals("B0-S0-E45") || sUpperName.equals("B0-S0-E90")) {	//팔꿈치 부담 작업
+			str += getString(R.string.comment_upper_01);
+ 		} else if(sUpperName.equals("B0-S45-E0") || sUpperName.equals("B0-S45-E90") || sUpperName.equals("B0-S120-E0")) { //어깨 부담 작업
+			str += getString(R.string.comment_upper_02);
+		} else if(sUpperName.equals("B0-S45-E45") || sUpperName.equals("B0-S90-E45") || sUpperName.equals("B0-S90-E90")) { //어깨, 팔꿈치 부담 작업
+			str += getString(R.string.comment_upper_03);
+		} else if(sUpperName.equals("B45-S45-E0") || sUpperName.equals("B90-S90-E0")) {	//허리 부담 작업
+			str += getString(R.string.comment_upper_04);
+		} else if(sUpperName.equals("B45-S45-E45") || sUpperName.equals("B45-S90-E0") || sUpperName.equals("B45-S90-E45")) { //허리, 어깨 부담 작업
+			str += getString(R.string.comment_upper_05);
+		} else if(sUpperName.equals("B90-S90-E45")) {
+			str += getString(R.string.comment_upper_06);
+		} else {
+			Logger.warn("Unknown posture name : " + sUpperName);
+		}
+		str += "\n하지 : ";
+		if(sLowerName.equals("KF150") || sLowerName.equals("KF120")) {	//무릎 부담 작업
+			str += getString(R.string.comment_lower_01);
+		} else if(sLowerName.equals("KF90") || sLowerName.equals("KF60") || sLowerName.equals("KF30") || sLowerName.equals("KNL_1") || sLowerName.equals("KNL_2")) { //무릎, 허리 부담 작업
+			str += getString(R.string.comment_lower_02);
+		} else if(sLowerName.equals("SC0")) { //허리 부담 작업
+			str += getString(R.string.comment_lower_03);
+		} else if(sLowerName.equals("KF30C")) {	//발목 부담 작업
+			str += getString(R.string.comment_lower_04);
+		} else if(sLowerName.equals("STD") || sLowerName.equals("SC40") || sLowerName.equals("SC20") || sLowerName.equals("SF_CRS")) { //없음
+			str += "부담 없음";
+		} else {
+			Logger.warn("Unknown posture name : " + sLowerName);
+		}
+		textComment.setText(str);
 	}
 }

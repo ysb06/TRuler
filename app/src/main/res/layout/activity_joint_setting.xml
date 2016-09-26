@@ -34,23 +34,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cView"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/iScreen"
-        android:layout_alignEnd="@+id/iScreen"/>
+        android:layout_alignEnd="@+id/iScreen"
+        android:layout_below="@+id/textGuide"
+        android:layout_above="@+id/btFinish"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_button_finish"
+        android:text="@string/layout_jointselection_button_finish_rotate"
         android:id="@+id/btFinish"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/iScreen"
-        android:layout_alignEnd="@+id/iScreen"
-        android:visibility="invisible"/>
+        android:layout_alignEnd="@+id/iScreen" />
 
 </RelativeLayout>

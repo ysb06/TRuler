@@ -9,4 +9,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".phase.legacy.others.MainMenu">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="75dp"
+        android:src="@drawable/main"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시   작"
+        android:id="@+id/button_mm_run"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        />
 </RelativeLayout>

@@ -2,19 +2,19 @@ package pe.hgs.truler.phase;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import pe.hgs.truler.R;
 import pe.hgs.truler.tools.ImageLoader;
 import pe.hgs.truler.tools.Logger;
-import pe.hgs.truler.tools.container.Joint;
+import pe.hgs.truler.tools.ergonomics.Joint;
 import pe.hgs.truler.tools.ergonomics.BoneStructure;
 import pe.hgs.truler.tools.ergonomics.Posture;
 import pe.hgs.truler.tools.ergonomics.PostureRiskAnalyzer;
@@ -31,7 +31,9 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 	private ImageView ivTarget;
 	private ImageView ivSample;
 	private Button btYes;
+
 	private Button btNo;
+	private Button btNo2;
 
 	private boolean isUpperOK = false;
 	private Intent result;
@@ -40,13 +42,17 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_joint_revision);
+		setTitle("자세 선택");
 
 		ivTarget = (ImageView) findViewById(R.id.image_jr_target);
 		ivSample = (ImageView) findViewById(R.id.image_jr_sample);
 		btYes = (Button) findViewById(R.id.button_jr_yes);
 		btYes.setOnClickListener(this);
-		btNo = (Button) findViewById(R.id.button_jr_no);
+
+		btNo = (Button) findViewById(R.id.button_jr_next);
+		btNo2 = (Button) findViewById(R.id.button_jr_prev);
 		btNo.setOnClickListener(this);
+		btNo2.setOnClickListener(this);
 
 		pra = new PostureRiskAnalyzer();
 
@@ -98,7 +104,6 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-			// TODO: 2016-08-19 예 아니오에 따라 자세 선택창으로 넘어갈지 여부 판단할 것
 			// 일단은 No 일경우 step3을 다시 하도록 할 것
 			case R.id.button_jr_yes:
 				if(isUpperOK) {		//최종 선택시 (하지 선택 완료)
@@ -123,10 +128,29 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 					finish();
 				} else {		//상지 선택 완료 시, 하지 선택으로 넘어가야 함
 					initializeComparing(postureFinalLower);
+					TextView guideTitle = (TextView) findViewById(R.id.text_jr_body);
+					guideTitle.setText(getText(R.string.layout_jointrevision_textview_lower));
 					isUpperOK = true;
 				}
 				break;
-			case R.id.button_jr_no:		//아니오 선택 시
+			case R.id.button_jr_prev:
+				if(isUpperOK) {	//하지 선택 단계에서
+					postureFinalLower = pra.getPrevPosture(postureFinalLower);
+					if(postureFinalLower == null) {			//하지는 절대 null 이 반환될 수 없음
+						Logger.error("Lower posture is null");
+						postureFinalLower = new Posture(Posture.PostureType.LOWER);
+					}
+					initializeComparing(postureFinalLower);
+				} else {	//상지 선택 단계에서
+					postureFinalUpper = pra.getPrevPosture(postureFinalUpper);		//정의되지 않은 상지 자세의 경우 이 단계에서 null 이 반환됨
+					if(postureFinalUpper == null) {
+						Logger.warn("Upper posture is null");
+						postureFinalUpper = new Posture(Posture.PostureType.UPPER);
+					}
+					initializeComparing(postureFinalUpper);
+				}
+				break;
+			case R.id.button_jr_next:		//아니오 선택 시
 				if(isUpperOK) {	//하지 선택 단계에서
 					postureFinalLower = pra.getNextPosture(postureFinalLower);
 					if(postureFinalLower == null) {			//하지는 절대 null 이 반환될 수 없음
@@ -143,6 +167,7 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 					initializeComparing(postureFinalUpper);
 				}
 				break;	//와 같이 다음 사진을 보여주어야 함
+
 			default:
 				Logger.error("Unknown Button");
 				break;

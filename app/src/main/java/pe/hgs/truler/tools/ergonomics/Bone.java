@@ -1,7 +1,6 @@
 package pe.hgs.truler.tools.ergonomics;
 
 import pe.hgs.truler.tools.Logger;
-import pe.hgs.truler.tools.container.Joint;
 
 /**
  * Created by ysb06 on 2016-08-15.

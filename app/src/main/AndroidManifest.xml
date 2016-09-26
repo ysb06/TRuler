@@ -47,6 +47,15 @@
             android:name=".phase.ResultFinal"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
+        <activity android:name=".tools.LogWindow">
+        </activity>
+        <activity android:name=".phase.subphase.PreventionGuide">
+        </activity>
+        <activity
+            android:name=".phase.subphase.PreventionVideo"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/NoTitleBarActivity">
+        </activity>
     </application>
 
 </manifest>

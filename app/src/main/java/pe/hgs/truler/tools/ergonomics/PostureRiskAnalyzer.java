@@ -190,4 +190,57 @@ public class PostureRiskAnalyzer
 
 		return null;
 	}
+
+	/** 데이터베이스 상에서 해당 자세의 이전 위치에 있는 자세를 반환, 먼저 상지 자세에서 검색 후 결과가 없을 경우 하지에서 검색.
+	 * 두 데이터베이스에서 모두 없는 경우 null 반환
+	 *
+	 * @param posture 기준 위치 자세 객체
+	 * @return 기준 자세의 이전 위치에 있는 자세
+	 */
+	public Posture getPrevPosture(Posture posture) {
+		for(int i = 0; i < NAME_UPPER_POSTURE.length; i++) {
+			if(NAME_UPPER_POSTURE[i].equals(posture.getName())) {
+				if(i > 0) {
+					return new Posture(Posture.PostureType.UPPER, NAME_UPPER_POSTURE[i - 1]);
+				} else {
+					return new Posture(Posture.PostureType.UPPER, NAME_UPPER_POSTURE[NAME_UPPER_POSTURE.length - 1]);
+				}
+			}
+		}
+
+		for(int i = 0; i < NAME_LOWER_POSTURE.length; i++) {
+			if(NAME_LOWER_POSTURE[i].equals(posture.getName())) {
+				if(i > 0) {
+					return new Posture(Posture.PostureType.LOWER, NAME_LOWER_POSTURE[i - 1]);
+				} else {
+					return new Posture(Posture.PostureType.LOWER, NAME_LOWER_POSTURE[NAME_LOWER_POSTURE.length - 1]);
+				}
+			}
+		}
+
+		return null;
+	}
+
+
+	/** 해당 이름의 자세의 순서를 반환. 상지, 하지에 대해 따로 적용. 없는 자세일 경우 -1 반환
+	 *
+	 * @param name 자세의 이름
+	 * @return 해당 자세의 순서 (0~)
+	 */
+	public static int getOrder(String name) {
+
+		for(int i = 0; i < NAME_UPPER_POSTURE.length; i++) {
+			if(NAME_UPPER_POSTURE[i].equals(name)) {
+				return i;
+			}
+		}
+
+		for(int i = 0; i < NAME_LOWER_POSTURE.length; i++) {
+			if(NAME_LOWER_POSTURE[i].equals(name)) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
 }

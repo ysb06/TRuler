@@ -1,7 +1,6 @@
 package pe.hgs.truler.tools.ergonomics;
 
 import pe.hgs.truler.tools.Logger;
-import pe.hgs.truler.tools.container.Joint;
 import pe.hgs.truler.tools.ergonomics.angle.BackAngle;
 import pe.hgs.truler.tools.ergonomics.angle.ElbowAngle;
 import pe.hgs.truler.tools.ergonomics.angle.FootAngle;

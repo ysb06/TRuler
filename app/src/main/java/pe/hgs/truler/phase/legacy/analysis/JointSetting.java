@@ -144,7 +144,7 @@ public class JointSetting extends AppCompatActivity implements JointViewListener
 	}
 
 	@Override
-	public void onJointSelected(pe.hgs.truler.tools.container.Joint joint, int count) {
+	public void onJointSelected(pe.hgs.truler.tools.ergonomics.Joint joint, int count) {
 
 	}
 

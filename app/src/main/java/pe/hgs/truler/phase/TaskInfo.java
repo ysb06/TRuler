@@ -27,6 +27,7 @@ public class TaskInfo extends AppCompatActivity implements View.OnClickListener 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_info);
+		setTitle("정보 입력");
 
 		btNextCamera = (Button) findViewById(R.id.btTI_next_camera);
 		btNextSelection = (Button) findViewById(R.id.btTI_next_selection);

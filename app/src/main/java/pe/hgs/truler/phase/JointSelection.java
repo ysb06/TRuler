@@ -1,9 +1,9 @@
 package pe.hgs.truler.phase;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -13,14 +13,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.Calendar;
 
 import pe.hgs.truler.R;
 import pe.hgs.truler.tools.ImageLoader;
-import pe.hgs.truler.tools.container.Joint;
+import pe.hgs.truler.tools.ergonomics.Joint;
 import pe.hgs.truler.tools.view.JointView;
 import pe.hgs.truler.tools.view.JointViewListener;
 import pe.hgs.truler.tools.Logger;
@@ -36,10 +33,13 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 	private ImageView ivScreen;
 	private JointView cvDotLayer;
 
+	private boolean isSelecting = true;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_joint_setting);
+		setTitle("관절 선택");
 		result = new Intent();
 
 		btFinish = (Button) findViewById(R.id.btFinish);
@@ -138,6 +138,7 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 			case 1:
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_02);
 				joint.setPoint(Joint.JPoint.HEAD);
+				btFinish.setVisibility(View.INVISIBLE);
 				break;
 			case 2:
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_03);
@@ -163,6 +164,8 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_08);
 				joint.setPoint(Joint.JPoint.FOOT);
 				btFinish.setVisibility(View.VISIBLE);
+				btFinish.setText(R.string.layout_jointselection_button_finish);
+				isSelecting = false;
 				cvDotLayer.setInputAvailable(false);
 				break;
 			default:
@@ -173,19 +176,38 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 
 	@Override
 	public void onClick(View view) {
-		Joint[] list = cvDotLayer.getJointsList();
-		result.putExtra("JointSelection_01_Head", list[0]);
-		result.putExtra("JointSelection_02_Shoulder", list[1]);
-		result.putExtra("JointSelection_03_Elbow", list[2]);
-		result.putExtra("JointSelection_04_Wrist", list[3]);
-		result.putExtra("JointSelection_05_Waist", list[4]);
-		result.putExtra("JointSelection_06_Knee", list[5]);
-		result.putExtra("JointSelection_07_Foot", list[6]);
-		result.putExtra("JointSelection_08_List", list);            // TODO: 2016-08-15 추후 이것만 사용할 것인지 위에 따로따로 저장된 것만 사용할 것인지 정할 것
-		result.putExtra("JointSelection_09_Image_Path", uriImagePath);
 
-		setResult(RESULT_OK, result);
-		ivScreen.setImageDrawable(null);
-		finish();
+		if(isSelecting) {
+			rotateTarget();
+		} else {
+			Joint[] list = cvDotLayer.getJointsList();
+			result.putExtra("JointSelection_01_Head", list[0]);
+			result.putExtra("JointSelection_02_Shoulder", list[1]);
+			result.putExtra("JointSelection_03_Elbow", list[2]);
+			result.putExtra("JointSelection_04_Wrist", list[3]);
+			result.putExtra("JointSelection_05_Waist", list[4]);
+			result.putExtra("JointSelection_06_Knee", list[5]);
+			result.putExtra("JointSelection_07_Foot", list[6]);
+			result.putExtra("JointSelection_08_List", list);            // TODO: 2016-08-15 추후 이것만 사용할 것인지 위에 따로따로 저장된 것만 사용할 것인지 정할 것
+			result.putExtra("JointSelection_09_Image_Path", uriImagePath);
+
+			setResult(RESULT_OK, result);
+			ivScreen.setImageDrawable(null);
+			finish();
+		}
+	}
+
+	// TODO: 2016-09-24 따로 여기에서만 사용하는 이미지 클래스를 만들 것. 그리고 이 메서드 그리고 ImageLoader의 rotate메서드를 합칠 것
+	/** 왼쪽 선택한 이미지를 회전 시킨다
+	 *
+	 */
+	private void rotateTarget() {
+		Matrix matrix = new Matrix();
+		matrix.postRotate(90);
+
+		Bitmap bitmapNew = Bitmap.createBitmap(bitmapSelectedImage , 0, 0, bitmapSelectedImage.getWidth(), bitmapSelectedImage.getHeight(), matrix, true);
+		bitmapSelectedImage.recycle();
+		bitmapSelectedImage = bitmapNew;
+		ivScreen.setImageBitmap(bitmapSelectedImage);
 	}
 }

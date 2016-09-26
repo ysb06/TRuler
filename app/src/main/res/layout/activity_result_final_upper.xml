@@ -5,12 +5,52 @@
               android:layout_height="match_parent">
 
     <pe.hgs.truler.tools.view.ResultView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/image_rf_result"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:src="@drawable/tables"/>
+        android:maxHeight="350dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/tables"
+        android:scaleType="matrix"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/text_rf_comment"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.25"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/layout_result_button_summary"
+            android:id="@+id/button_rf_status_01"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/layout_result_button_upper"
+            android:id="@+id/button_rf_status_02"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/layout_result_button_lower"
+            android:id="@+id/button_rf_status_03"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -33,28 +73,5 @@
             android:layout_weight="1" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/layout_result_button_upper"
-            android:id="@+id/button_rf_status_01"
-            android:layout_weight="1" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/layout_result_button_lower"
-            android:id="@+id/button_rf_status_02"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
 
 </LinearLayout>

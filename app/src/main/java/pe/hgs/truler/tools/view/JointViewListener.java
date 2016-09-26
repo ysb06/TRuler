@@ -1,6 +1,6 @@
 package pe.hgs.truler.tools.view;
 
-import pe.hgs.truler.tools.container.Joint;
+import pe.hgs.truler.tools.ergonomics.Joint;
 
 /**
  * Created by ysb06 on 2016-08-08.

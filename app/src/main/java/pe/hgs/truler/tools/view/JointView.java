@@ -9,7 +9,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import pe.hgs.truler.tools.Logger;
-import pe.hgs.truler.tools.container.Joint;
+import pe.hgs.truler.tools.ergonomics.Joint;
 
 /** 관절 선택 부분 표시 View
  * Created by ysb06 on 2016-08-08.

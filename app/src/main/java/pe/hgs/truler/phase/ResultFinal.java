@@ -1,19 +1,14 @@
 package pe.hgs.truler.phase;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
-import android.support.v4.view.MenuItemCompat;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import pe.hgs.truler.R;
@@ -23,7 +18,7 @@ import pe.hgs.truler.tools.LogWindow;
 import pe.hgs.truler.tools.Logger;
 import pe.hgs.truler.tools.view.ResultView;
 
-public class ResultFinal extends AppCompatActivity implements View.OnClickListener {
+public class ResultFinal extends AppCompatActivity implements View.OnClickListener, Phase {
 
 	private enum State { SUMMARY, UPPER, LOWER }
 
@@ -49,10 +44,7 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_result_final_upper);
-
-		Intent itJointRevision = new Intent(this, JointRevision.class);
-		startActivityForResult(itJointRevision, Phase.PHASE_REVISION);
+		setContentView(R.layout.activity_result_final);
 
 		btState01 = (Button) findViewById(R.id.button_rf_status_01);
 		btState02 = (Button) findViewById(R.id.button_rf_status_02);
@@ -66,6 +58,40 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 		btexer.setOnClickListener(this);
 		rvResult = (ResultView) findViewById(R.id.image_rf_result);
 		textComment = (TextView) findViewById(R.id.text_rf_comment);
+
+		sUpperName = getIntent().getStringExtra(RESULT_UPPER_NAME);
+		iUpperRisk = getIntent().getIntExtra(RESULT_UPPER_BASIC, 0);
+		iUpperTimeRisk = getIntent().getIntExtra(RESULT_UPPER_TIME, 0);
+
+		sLowerName = getIntent().getStringExtra(RESULT_LOWER_NAME);
+		iLowerRisk = getIntent().getIntExtra(RESULT_LOWER_BASIC, 0);
+		iLowerTimeRisk = getIntent().getIntExtra(RESULT_LOWER_TIME, 0);
+
+		iWorkTime = getIntent().getIntExtra(INFO_WORK_TIME, 0);
+
+		Logger.debug("Final Selection -> " + sUpperName + " [Lv." + iUpperRisk + ", " + iUpperTimeRisk + "],\t" + sLowerName + " [Lv." + iLowerRisk + ", " + iLowerTimeRisk + "]	for " + iWorkTime + " min.");
+		//수정할 부분
+			/*
+			textRiskName.setText(sUpperName);
+			textRiskTypes[iUpperRisk - 1].setBackgroundColor(Color.RED);
+			textResults[iUpperRisk - 1].setText("위험수준 " + iUpperTimeRisk + "단계");
+			//*/
+		setStateAsSummary(this.getResources().getConfiguration().orientation);
+		setComment();
+		initializeButtons(btState01);
+
+		//진짜 결과 창 실행
+		Intent intent = new Intent(this, ResultFinal01.class);
+
+		intent.putExtra(RESULT_UPPER_NAME, sUpperName);
+		intent.putExtra(RESULT_UPPER_BASIC, iUpperRisk);
+		intent.putExtra(RESULT_UPPER_TIME, iUpperTimeRisk);
+		intent.putExtra(RESULT_LOWER_NAME, sLowerName);
+		intent.putExtra(RESULT_LOWER_BASIC, iLowerRisk);
+		intent.putExtra(RESULT_LOWER_TIME, iLowerTimeRisk);
+		intent.putExtra(INFO_WORK_TIME, iWorkTime);
+
+		startActivityForResult(intent, PHASE_RESULT);
 	}
 
 	@Override
@@ -102,6 +128,14 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 				Intent itLog = new Intent(this, LogWindow.class);
 				startActivity(itLog);
 				break;
+			case R.id.menu_rf_test:
+				//커스텀 뷰 테스트 코드
+
+				break;
+			case R.id.menu_rf_finish:
+				setResult(RESULT_OK);
+				finish();
+				break;
 			default:
 				break;
 		}
@@ -111,30 +145,8 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-
-		if(requestCode == Phase.PHASE_REVISION && resultCode == RESULT_OK) {
-			sUpperName = data.getStringExtra("JointRevision_05_Name_Upper");
-			iUpperRisk = data.getIntExtra("JointRevision_01_UpperBasic", 0);
-			iUpperTimeRisk = data.getIntExtra("JointRevision_02_UpperTime", 0);
-
-			sLowerName = data.getStringExtra("JointRevision_06_Name_Lower");
-			iLowerRisk = data.getIntExtra("JointRevision_03_LowerBasic", 0);
-			iLowerTimeRisk = data.getIntExtra("JointRevision_04_LowerTime", 0);
-
-			iWorkTime = data.getIntExtra("TaskInfo_06_WorkTime", 0);
-
-			Logger.debug("Final Selection -> " + sUpperName + " [Lv." + iUpperRisk + ", " + iUpperTimeRisk + "],\t" + sLowerName + " [Lv." + iLowerRisk + ", " + iLowerTimeRisk + "]	for " + iWorkTime + " min.");
-			//수정할 부분
-			/*
-			textRiskName.setText(sUpperName);
-			textRiskTypes[iUpperRisk - 1].setBackgroundColor(Color.RED);
-			textResults[iUpperRisk - 1].setText("위험수준 " + iUpperTimeRisk + "단계");
-			//*/
-			setStateAsSummary(this.getResources().getConfiguration().orientation);
-			setComment();
-		} else if(requestCode == Phase.PHASE_REVISION && resultCode == RESULT_CANCELED) {
-			finish();
-		}
+		setResult(RESULT_OK);
+		finish();
 	}
 
 	private TextView getTextView(int id) {
@@ -147,12 +159,15 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 		switch (view.getId()) {
 			case R.id.button_rf_status_01:
 				setStateAsSummary(this.getResources().getConfiguration().orientation);
+				initializeButtons(btState01);
 				break;
 			case R.id.button_rf_status_02:
 				setStateAsUpper(this.getResources().getConfiguration().orientation);
+				initializeButtons(btState02);
 				break;
 			case R.id.button_rf_status_03:
 				setStateAsLower(this.getResources().getConfiguration().orientation);
+				initializeButtons(btState03);
 				break;
 			case R.id.button_rf_upper_law:
 				Intent itGuide = new Intent(this, PreventionGuide.class);
@@ -193,6 +208,18 @@ public class ResultFinal extends AppCompatActivity implements View.OnClickListen
 
 		}
 		//*/
+	}
+
+	private void initializeButtons(Button button) {
+		btState01.setBackgroundColor(Color.GRAY);
+		btState01.setTextColor(Color.BLACK);
+		btState02.setBackgroundColor(Color.GRAY);
+		btState02.setTextColor(Color.BLACK);
+		btState03.setBackgroundColor(Color.GRAY);
+		btState03.setTextColor(Color.BLACK);
+
+		button.setBackgroundColor(Color.DKGRAY);
+		button.setTextColor(Color.WHITE);
 	}
 
 	private void setStateAsSummary(int orientation) {

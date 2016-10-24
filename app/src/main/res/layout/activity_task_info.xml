@@ -48,7 +48,7 @@
                 android:ems="10"
                 android:id="@+id/etTI_param_01"
                 android:layout_span="4"
-                android:singleLine="true"/>
+                android:maxLines="1"/>
         </TableRow>
         <TableRow>
             <TextView
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/etTI_param_02"
                 android:layout_span="4"
-                android:singleLine="true"/>
+                android:maxLines="1"/>
         </TableRow>
         <TableRow>
             <TextView
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/etTI_param_03"
                 android:layout_span="4"
-                android:singleLine="true"/>
+                android:maxLines="1"/>
         </TableRow>
         <TableRow>
             <TextView
@@ -96,7 +96,23 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/etTI_param_04"
                 android:layout_span="4"
-                android:singleLine="true"/>
+                android:maxLines="1"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/layout_taskinfo_textview_param_name_08"
+                android:id="@+id/tvTI_param_name_08"
+                android:layout_column="0"
+                android:textAlignment="center"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etTI_param_08"
+                android:layout_span="4"
+                android:maxLines="1"/>
         </TableRow>
         <TableRow>
             <TextView
@@ -112,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/etTI_param_05"
                 android:layout_span="4"
-                android:singleLine="true"/>
+                android:maxLines="1"/>
         </TableRow>
         <TableRow>
             <TextView
@@ -129,7 +145,7 @@
                 android:inputType="number"
                 android:id="@+id/etTI_param_06"
                 android:layout_span="3"
-                android:singleLine="true"/>
+                android:maxLines="1"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -154,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/etTI_param_07"
                 android:layout_span="4"
-                android:singleLine="true"/>
+                android:maxLines="1"/>
         </TableRow>
 
     </TableLayout>

@@ -21,10 +21,10 @@ public class Posture {
 		pType = type;
 		switch (pType) {
 			case UPPER:
-				pName = PostureRiskAnalyzer.NAME_UPPER_POSTURE[0];
+				pName = PostureAnalyzer.NAME_UPPER_POSTURE[0];
 				break;
 			case LOWER:
-				pName = PostureRiskAnalyzer.NAME_LOWER_POSTURE[0];
+				pName = PostureAnalyzer.NAME_LOWER_POSTURE[0];
 				break;
 		}
 	}
@@ -59,7 +59,7 @@ public class Posture {
 						pName = "STD";
 						break;
 					default:
-						Logger.warn("앉는 자세에서 알 수 없는 무릎 각도");
+						Logger.warn("앉는 자세에서 알 수 없는 무릎 각도 (" + kneeAngle + ")");
 						pName = "SC40";
 						break;
 				}
@@ -67,7 +67,7 @@ public class Posture {
 			case F60:		//Standing or Squatting
 				switch (kneeAngle) {
 					case K180:
-						Logger.warn("선 자세에서 알 수 없는 무릎 각도");
+						Logger.warn("선 자세에서 알 수 없는 무릎 각도 (" + kneeAngle + ")");
 						pName = "STD";
 						break;
 					case K150:

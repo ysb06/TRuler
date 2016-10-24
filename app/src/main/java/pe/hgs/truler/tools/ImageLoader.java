@@ -27,14 +27,27 @@ public class ImageLoader {
 	private Uri uriPath;
 	private Bitmap bitImage;
 
+	private int iRotate = 0;
+
 	/** ImageLoader 객체 초기화, 경로로부터 이미지를 로드.
 	 *
 	 * @param resolver URI 처리를 위한 Context.ContentResolver
 	 * @param path URI 경로
 	 */
 	public ImageLoader(ContentResolver resolver, Uri path) {
+		this(resolver, path, 0);
+	}
+
+	/** ImageLoader 객체 초기화, 경로로부터 이미지를 로드. 정해진 횟수만큼 회전
+	 *
+	 * @param resolver URI 처리를 위한 Context.ContentResolver
+	 * @param path URI 경로
+	 * @param count_rotate 회전 횟수
+	 */
+	public ImageLoader(ContentResolver resolver, Uri path, int count_rotate) {
 		this.resolver = resolver;
 		this.uriPath = path;
+		this.iRotate = count_rotate;
 
 		bitImage = loadImage();
 	}
@@ -87,6 +100,7 @@ public class ImageLoader {
 		Bitmap bitmap = BitmapFactory.decodeStream(stream, null, bitmapOptions);
 
 		int orientation = getImageOrientation(getPathFromUri(uriPath));
+		orientation = orientation + iRotate * 90;
 		Logger.debug("Image Size -> (" + onlyBoundsOptions.outWidth + ", " + onlyBoundsOptions.outHeight + ")\tOrientation -> " + orientation);
 		bitmap = rotateBitmap(bitmap, orientation);
 

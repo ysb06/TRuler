@@ -2,7 +2,6 @@ package pe.hgs.truler.phase;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,19 +16,20 @@ import pe.hgs.truler.tools.Logger;
 import pe.hgs.truler.tools.ergonomics.Joint;
 import pe.hgs.truler.tools.ergonomics.BoneStructure;
 import pe.hgs.truler.tools.ergonomics.Posture;
-import pe.hgs.truler.tools.ergonomics.PostureRiskAnalyzer;
+import pe.hgs.truler.tools.ergonomics.PostureAnalyzer;
 
-public class JointRevision extends AppCompatActivity implements View.OnClickListener {
+public class JointRevision extends AppCompatActivity implements View.OnClickListener, Phase {
 
 	private BoneStructure bsHuman;
 	private Bitmap bitTarget;
-	private PostureRiskAnalyzer pra;
+	private PostureAnalyzer pra;
 
 	private Posture postureFinalUpper;
 	private Posture postureFinalLower;
 
 	private ImageView ivTarget;
 	private ImageView ivSample;
+	private ImageView ivSampleLower;
 	private Button btYes;
 
 	private Button btNo;
@@ -46,6 +46,7 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 
 		ivTarget = (ImageView) findViewById(R.id.image_jr_target);
 		ivSample = (ImageView) findViewById(R.id.image_jr_sample);
+		ivSampleLower = (ImageView) findViewById(R.id.image_jr_sample02) ;
 		btYes = (Button) findViewById(R.id.button_jr_yes);
 		btYes.setOnClickListener(this);
 
@@ -54,14 +55,53 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 		btNo.setOnClickListener(this);
 		btNo2.setOnClickListener(this);
 
-		pra = new PostureRiskAnalyzer();
+		pra = new PostureAnalyzer();
+		//-------------------------- 인터페이스 초기화 완료 ----------------------------//
 
-		Intent itPhase = new Intent(this, JointSelection.class);
-		startActivityForResult(itPhase, Phase.PHASE_JOINT_SELECTION);
+
+		Joint[] joints = new Joint[7];
+		joints[0] = getIntent().getParcelableExtra(JOINT_HEAD);
+		joints[1] = getIntent().getParcelableExtra(JOINT_SHOULDER);
+		joints[2] = getIntent().getParcelableExtra(JOINT_ELBOW);
+		joints[3] = getIntent().getParcelableExtra(JOINT_WRIST);
+		joints[4] = getIntent().getParcelableExtra(JOINT_WAIST);
+		joints[5] = getIntent().getParcelableExtra(JOINT_KNEE);
+		joints[6] = getIntent().getParcelableExtra(JOINT_FOOT);
+
+		bsHuman = new BoneStructure(joints);
+
+		postureFinalUpper = bsHuman.getPosture(Posture.PostureType.UPPER);
+		postureFinalUpper = pra.getSimilarPosture(postureFinalUpper);				//상지 보정
+		if(!pra.isDefined(postureFinalUpper)) {
+			postureFinalUpper = new Posture(Posture.PostureType.UPPER);
+			Logger.warn("The upper posture is not defined. Set to default");
+		}
+
+
+		postureFinalLower = bsHuman.getPosture(Posture.PostureType.LOWER);
+		if(!pra.isDefined(postureFinalLower)) {
+			postureFinalLower = new Posture(Posture.PostureType.LOWER);
+			Logger.error("The lower posture is not defined!!");
+		}
+
+		setUpperImage(postureFinalUpper);
+
+		Uri uri = getIntent().getParcelableExtra(URI_SELECTED_IMAGE);
+		int rotate = getIntent().getIntExtra(NUMBER_IMAGE_ROTATE, 0);
+		if(uri != null) {
+			ImageLoader loader = new ImageLoader(this.getContentResolver(), uri, rotate);
+			bitTarget = loader.getImage();
+
+			ivTarget.setImageBitmap(bitTarget);
+		}
+
+		result = new Intent();
+
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Logger.warn(this.getClass(), "onActivityResult is called");
 
 		if(resultCode == RESULT_OK) {
 			Joint[] joints = new Joint[7];
@@ -86,7 +126,7 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 				Logger.error("The lower posture is not defined!!");
 			}
 
-			initializeComparing(postureFinalUpper);
+			setUpperImage(postureFinalUpper);
 
 			Uri uri = data.getParcelableExtra("JointSelection_09_Image_Path");
 			if(uri != null) {
@@ -107,7 +147,7 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 			// 일단은 No 일경우 step3을 다시 하도록 할 것
 			case R.id.button_jr_yes:
 				if(isUpperOK) {		//최종 선택시 (하지 선택 완료)
-					int iMinute = result.getIntExtra("TaskInfo_06_WorkTime", -1);
+					int iMinute = getIntent().getIntExtra(INFO_WORK_TIME, -1);
 					if(iMinute == -1) {
 						Logger.error("작업시간에 대한 정보 없음");
 					}
@@ -117,17 +157,17 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 					int iBasicLowerRisk = pra.getBasicRisk(postureFinalLower);
 					int iBasicLowerTimeRisk = pra.getTimeRisk(postureFinalLower, iMinute);
 
-					result.putExtra("JointRevision_01_UpperBasic", iBasicUpperRisk);
-					result.putExtra("JointRevision_02_UpperTime", iBasicUpperTimeRisk);
-					result.putExtra("JointRevision_03_LowerBasic", iBasicLowerRisk);
-					result.putExtra("JointRevision_04_LowerTime", iBasicLowerTimeRisk);
-					result.putExtra("JointRevision_05_Name_Upper", postureFinalUpper.getName());
-					result.putExtra("JointRevision_06_Name_Lower", postureFinalLower.getName());
+					result.putExtra(RESULT_UPPER_BASIC, iBasicUpperRisk);
+					result.putExtra(RESULT_UPPER_TIME, iBasicUpperTimeRisk);
+					result.putExtra(RESULT_LOWER_BASIC, iBasicLowerRisk);
+					result.putExtra(RESULT_LOWER_TIME, iBasicLowerTimeRisk);
+					result.putExtra(RESULT_UPPER_NAME, postureFinalUpper.getName());
+					result.putExtra(RESULT_LOWER_NAME, postureFinalLower.getName());
 
 					setResult(RESULT_OK, result);
 					finish();
 				} else {		//상지 선택 완료 시, 하지 선택으로 넘어가야 함
-					initializeComparing(postureFinalLower);
+					setLowerImage(postureFinalLower);
 					TextView guideTitle = (TextView) findViewById(R.id.text_jr_body);
 					guideTitle.setText(getText(R.string.layout_jointrevision_textview_lower));
 					isUpperOK = true;
@@ -140,14 +180,14 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 						Logger.error("Lower posture is null");
 						postureFinalLower = new Posture(Posture.PostureType.LOWER);
 					}
-					initializeComparing(postureFinalLower);
+					setLowerImage(postureFinalLower);
 				} else {	//상지 선택 단계에서
 					postureFinalUpper = pra.getPrevPosture(postureFinalUpper);		//정의되지 않은 상지 자세의 경우 이 단계에서 null 이 반환됨
 					if(postureFinalUpper == null) {
 						Logger.warn("Upper posture is null");
 						postureFinalUpper = new Posture(Posture.PostureType.UPPER);
 					}
-					initializeComparing(postureFinalUpper);
+					setUpperImage(postureFinalUpper);
 				}
 				break;
 			case R.id.button_jr_next:		//아니오 선택 시
@@ -157,14 +197,14 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 						Logger.error("Lower posture is null");
 						postureFinalLower = new Posture(Posture.PostureType.LOWER);
 					}
-					initializeComparing(postureFinalLower);
+					setLowerImage(postureFinalLower);
 				} else {	//상지 선택 단계에서
 					postureFinalUpper = pra.getNextPosture(postureFinalUpper);		//정의되지 않은 상지 자세의 경우 이 단계에서 null 이 반환됨
 					if(postureFinalUpper == null) {
 						Logger.warn("Upper posture is null");
 						postureFinalUpper = new Posture(Posture.PostureType.UPPER);
 					}
-					initializeComparing(postureFinalUpper);
+					setUpperImage(postureFinalUpper);
 				}
 				break;	//와 같이 다음 사진을 보여주어야 함
 
@@ -174,9 +214,17 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 		}
 	}
 
-	private void initializeComparing(Posture posture) {
+	private void setUpperImage(Posture posture) {
 		if(pra.isDefined(posture)) {
 			ivSample.setImageResource(pra.getImageID(posture));
+		} else {
+			Logger.error("The posture is not defined");
+		}
+	}
+
+	private void setLowerImage(Posture posture) {
+		if(pra.isDefined(posture)) {
+			ivSampleLower.setImageResource(pra.getImageID(posture));
 		} else {
 			Logger.error("The posture is not defined");
 		}

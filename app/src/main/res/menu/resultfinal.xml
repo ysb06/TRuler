@@ -6,6 +6,12 @@
         android:id="@+id/menu_rf_show"
         android:title="로그 보기" />
 
+    <item
+        android:id="@+id/menu_rf_test"
+        android:title="테스트 코드 실행" />
 
+    <item android:id="@+id/menu_rf_finish"
+          android:title="완료"
+          android:showAsAction="ifRoom" />
 
 </menu>

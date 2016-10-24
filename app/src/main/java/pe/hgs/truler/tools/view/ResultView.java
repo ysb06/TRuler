@@ -17,7 +17,7 @@ import android.widget.ImageView;
 
 import pe.hgs.truler.R;
 import pe.hgs.truler.tools.Logger;
-import pe.hgs.truler.tools.ergonomics.PostureRiskAnalyzer;
+import pe.hgs.truler.tools.ergonomics.PostureAnalyzer;
 
 /** 이미지 뷰에서 두가지 기능 추가<p>
  * 1. 상태에 따라 그림에 마크 표시<br>
@@ -66,7 +66,6 @@ public class ResultView extends ImageView {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		super.onTouchEvent(event);
-
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_MOVE:
 				float fx1 = event.getX();
@@ -214,7 +213,7 @@ public class ResultView extends ImageView {
 				Logger.error(this.getClass(), "No defined orientation");
 				return;
 		}
-		int pos = PostureRiskAnalyzer.getOrder(posture);
+		int pos = PostureAnalyzer.getOrder(posture);
 
 		reimage(src, fMarkOX + (fMarkIntervalX * pos), fMarkOY + (fMarkIntervalY * (risk - 1)), MARK_SIZE);
 		src.recycle();
@@ -248,7 +247,7 @@ public class ResultView extends ImageView {
 				return;
 		}
 
-		int pos = PostureRiskAnalyzer.getOrder(posture);
+		int pos = PostureAnalyzer.getOrder(posture);
 
 		reimage(src, fMarkOX + (fMarkIntervalX * pos), fMarkOY + (fMarkIntervalY * (risk - 1)), MARK_SIZE);
 		src.recycle();

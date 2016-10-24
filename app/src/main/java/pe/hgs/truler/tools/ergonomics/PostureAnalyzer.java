@@ -12,7 +12,7 @@ import pe.hgs.truler.tools.Logger;
  *
  * Created by ysb06 on 2016-08-19.
  */
-public class PostureRiskAnalyzer
+public class PostureAnalyzer
 {
 	// TODO: 2016-08-19 주의 이 부분은 추후 외부 테이블 객체(Ex. CSV)를 읽어들이는 식으로 변경을 요함
 
@@ -33,10 +33,18 @@ public class PostureRiskAnalyzer
 	public static final int[] RISK_LV2_LOWER_POSTURE_TIME 	= {11, 8, -1, -1, -1, 2, 2, 2, 2, 11, 2, 13, 18};
 	public static final int[] RISK_LV3_LOWER_POSTURE_TIME 	= {33, 12, -1, -1, -1, 9, 3, 4, 5, 35, 18, 38, 57};
 
+	/* 이전 그림 ID
 	public static final int[] IMAGE_ID_UPPER_POSTURE 	= { R.drawable.upper01, R.drawable.upper02, R.drawable.upper03, R.drawable.upper04, R.drawable.upper05, R.drawable.upper06, R.drawable.upper07,
 																	R.drawable.upper08, R.drawable.upper09, R.drawable.upper10, R.drawable.upper11, R.drawable.upper12, R.drawable.upper13, R.drawable.upper14,};
 	public static final int[] IMAGE_ID_LOWER_POSTURE 	= { R.drawable.lower01, R.drawable.lower02, R.drawable.lower03, R.drawable.lower04, R.drawable.lower05, R.drawable.lower06, R.drawable.lower07,
 																	R.drawable.lower08, R.drawable.lower09, R.drawable.lower10, R.drawable.lower11, R.drawable.lower12, R.drawable.lower13};
+	//*/
+	public static final int[] IMAGE_ID_UPPER_POSTURE 	= { R.drawable.upper101, R.drawable.upper102, R.drawable.upper103, R.drawable.upper104, R.drawable.upper105, R.drawable.upper106, R.drawable.upper107,
+			R.drawable.upper108, R.drawable.upper109, R.drawable.upper110, R.drawable.upper111, R.drawable.upper112, R.drawable.upper113, R.drawable.upper114,};
+	public static final int[] IMAGE_ID_LOWER_POSTURE 	= { R.drawable.lower101, R.drawable.lower102, R.drawable.lower103, R.drawable.lower104, R.drawable.lower105, R.drawable.lower106, R.drawable.lower107,
+			R.drawable.lower108, R.drawable.lower109, R.drawable.lower110, R.drawable.lower111, R.drawable.lower112, R.drawable.lower113 };
+
+
 
 	//현재 클래스 내부에서 쓸 데이터 읽기 편이성을 위한 변수들
 	private HashMap<String, Integer> mapPostureRisk;
@@ -46,13 +54,12 @@ public class PostureRiskAnalyzer
 	private HashMap<String, Integer> mapPostureImageID;
 
 
-	public PostureRiskAnalyzer() {
+	public PostureAnalyzer() {
 		if(NAME_UPPER_POSTURE.length == RISK_UPPER_POSTURE_BASIC.length &&
 				NAME_UPPER_POSTURE.length == RISK_LV1_UPPER_POSTURE_TIME.length &&
 				NAME_UPPER_POSTURE.length == RISK_LV2_UPPER_POSTURE_TIME.length &&
 				NAME_UPPER_POSTURE.length == RISK_LV3_UPPER_POSTURE_TIME.length &&
 				NAME_UPPER_POSTURE.length == IMAGE_ID_UPPER_POSTURE.length) {
-			Logger.debug("Upper Posture Data Verified");
 		}
 		if(NAME_UPPER_POSTURE == null) {
 			Logger.error("Runtime Error Fuck");
@@ -63,7 +70,6 @@ public class PostureRiskAnalyzer
 				NAME_LOWER_POSTURE.length == RISK_LV2_LOWER_POSTURE_TIME.length &&
 				NAME_LOWER_POSTURE.length == RISK_LV3_LOWER_POSTURE_TIME.length &&
 				NAME_LOWER_POSTURE.length == IMAGE_ID_LOWER_POSTURE.length) {
-			Logger.debug("Lower Posture Data Verified");
 		}
 
 		mapPostureRisk = new HashMap<>();
@@ -161,6 +167,8 @@ public class PostureRiskAnalyzer
 		return false;
 	}
 
+
+
 	/** 데이터베이스 상에서 해당 자세의 다음 위치에 있는 자세를 반환, 먼저 상지 자세에서 검색 후 결과가 없을 경우 하지에서 검색.
 	 * 두 데이터베이스에서 모두 없는 경우 null 반환
 	 *
@@ -221,13 +229,29 @@ public class PostureRiskAnalyzer
 		return null;
 	}
 
+	public Posture getSimilarPosture(Posture posture) {
+		if(isDefined(posture))
+			return posture;
+		else {
+			Logger.debug("The Posture is revised from " + posture.getName());
+			String str = posture.getName();
+			if(str.equals("B45-S90-E90")) {
+				return new Posture(Posture.PostureType.UPPER, "B45-S90-E45");
+			} else if(str.equals("B45-S45-E90")) {
+				return new Posture(Posture.PostureType.UPPER, "B45-S45-E45");
+			}
+			// TODO: 2016-09-27 상지 보정 코드 작성
+			return posture;
+		}
+	}
+
 
 	/** 해당 이름의 자세의 순서를 반환. 상지, 하지에 대해 따로 적용. 없는 자세일 경우 -1 반환
 	 *
 	 * @param name 자세의 이름
 	 * @return 해당 자세의 순서 (0~)
 	 */
-	public static int getOrder(String name) {
+	public int getOrder(String name) {
 
 		for(int i = 0; i < NAME_UPPER_POSTURE.length; i++) {
 			if(NAME_UPPER_POSTURE[i].equals(name)) {

@@ -19,6 +19,7 @@
     <string name="layout_taskinfo_textview_param_name_05">지역</string>
     <string name="layout_taskinfo_textview_param_name_06">유지시간</string>
     <string name="layout_taskinfo_textview_param_name_07">분석자</string>
+    <string name="layout_taskinfo_textview_param_name_08">무게</string>
     <string name="layout_taskinfo_textview_param_guide_01">분(min.)</string>
 
     <string name="layout_jointselection_button_finish">완료(다음 단계)</string>
@@ -45,12 +46,23 @@
     <string name="layout_result_button_upper">상지</string>
     <string name="layout_result_button_lower">하지</string>
 
+    <string name="layout_finalresult_text_button_upper">상지</string>
+    <string name="layout_finalresult_text_button_lower">하지</string>
+    <string name="layout_finalresult_text_guide_01">위험 수준</string>
+
+    <string name="layout_finalresult_button_law">예방법</string>
+    <string name="layout_finalresult_button_exercise">예방체조</string>
+    <string name="layout_finalresult_button_summary_basic">종합(P)</string>
+    <string name="layout_finalresult_button_summary_time">종합(D)</string>
+    <string name="layout_finalresult_button_upper">상지</string>
+    <string name="layout_finalresult_button_lower">하지</string>
+
     <string-array name="layout_result_spinner_list">
         <item>정보 입력</item>
         <item>관절 선택</item>
         <item>자세 선택</item>
     </string-array>
-    
+
     <string name="test_risk_01">1</string>
     <string name="test_risk_02">2</string>
     <string name="test_risk_03">3</string>

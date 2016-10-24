@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+import pe.hgs.truler.MainActivity;
 import pe.hgs.truler.R;
 import pe.hgs.truler.tools.ImageLoader;
 import pe.hgs.truler.tools.ergonomics.Joint;
@@ -22,10 +23,11 @@ import pe.hgs.truler.tools.view.JointView;
 import pe.hgs.truler.tools.view.JointViewListener;
 import pe.hgs.truler.tools.Logger;
 
-public class JointSelection extends AppCompatActivity implements JointViewListener, View.OnClickListener {
+public class JointSelection extends AppCompatActivity implements JointViewListener, View.OnClickListener, Phase {
 
 	private Intent result;
 	private Bitmap bitmapSelectedImage;
+	private int iRotateCount = 0;
 	private Uri uriImagePath;
 
 	private Button btFinish;
@@ -49,6 +51,17 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 		cvDotLayer = (JointView) findViewById(R.id.cView)	;		//관절 선택 표시 뷰 초기화
 		cvDotLayer.addListener(this);
 
+
+		uriImagePath = getIntent().getParcelableExtra(URI_SELECTED_IMAGE);
+
+		if(uriImagePath != null) {
+			Logger.debug(uriImagePath.toString());
+			ImageLoader loader = new ImageLoader(this.getContentResolver(), uriImagePath);
+			bitmapSelectedImage = loader.getImage();
+			ivScreen.setImageBitmap(bitmapSelectedImage);
+		}
+
+		/*
 		if(getIntent().getIntExtra("TaskInfo_06_WorkTime", -1) == -1) {
 			Intent intentTI = new Intent(this, TaskInfo.class);
 			startActivityForResult(intentTI, Phase.PHASE_INPUT_INFORMATION);
@@ -57,6 +70,7 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 			prevResult.putExtras(getIntent().getExtras());
 			onActivityResult(Phase.PHASE_INPUT_INFORMATION, 11, prevResult);
 		}
+		//*/
 	}
 
 	@Override
@@ -68,6 +82,8 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Logger.warn(this.getClass(), "onActivityResult is called");
+		/*
 		if(requestCode == Phase.PHASE_INPUT_INFORMATION && resultCode >= 10) {
 			result = data;
 			setResult(RESULT_CANCELED, result);
@@ -96,11 +112,7 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 		} else if(requestCode == Phase.PHASE_INPUT_INFORMATION && resultCode == RESULT_CANCELED) {
 			finish();
 		} else if(requestCode == Phase.PHASE_IMAGE_LOADING && resultCode == RESULT_OK) {
-			uriImagePath = data.getData();
-			Logger.debug(uriImagePath.toString());
-			ImageLoader loader = new ImageLoader(this.getContentResolver(), uriImagePath);
-			bitmapSelectedImage = loader.getImage();
-			ivScreen.setImageBitmap(bitmapSelectedImage);
+
 		} else if(requestCode == Phase.PHASE_IMAGE_LOADING && resultCode == RESULT_CANCELED) {
 			finish();
 		} else if(requestCode == Phase.PHASE_CAMERA && resultCode == RESULT_OK) {
@@ -109,6 +121,7 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 			bitmapSelectedImage = (Bitmap)data.getExtras().get("data");
 			ivScreen.setImageBitmap(bitmapSelectedImage);
 			//*/
+		/*
 			Intent intentAP = new Intent(Intent.ACTION_PICK);
 			intentAP.setType("image/*");
 			startActivityForResult(intentAP, Phase.PHASE_IMAGE_LOADING);
@@ -119,6 +132,7 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 		} else {
 			Logger.error("JointSelection -> Request 처리되지 않음");
 		}
+	//*/
 	}
 
 	@Override
@@ -181,13 +195,15 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 			rotateTarget();
 		} else {
 			Joint[] list = cvDotLayer.getJointsList();
-			result.putExtra("JointSelection_01_Head", list[0]);
-			result.putExtra("JointSelection_02_Shoulder", list[1]);
-			result.putExtra("JointSelection_03_Elbow", list[2]);
-			result.putExtra("JointSelection_04_Wrist", list[3]);
-			result.putExtra("JointSelection_05_Waist", list[4]);
-			result.putExtra("JointSelection_06_Knee", list[5]);
-			result.putExtra("JointSelection_07_Foot", list[6]);
+			result.putExtra(JOINT_HEAD, list[0]);
+			result.putExtra(JOINT_SHOULDER, list[1]);
+			result.putExtra(JOINT_ELBOW, list[2]);
+			result.putExtra(JOINT_WRIST, list[3]);
+			result.putExtra(JOINT_WAIST, list[4]);
+			result.putExtra(JOINT_KNEE, list[5]);
+			result.putExtra(JOINT_FOOT, list[6]);
+			int temp = iRotateCount % 4;
+			result.putExtra(NUMBER_IMAGE_ROTATE, temp);
 			result.putExtra("JointSelection_08_List", list);            // TODO: 2016-08-15 추후 이것만 사용할 것인지 위에 따로따로 저장된 것만 사용할 것인지 정할 것
 			result.putExtra("JointSelection_09_Image_Path", uriImagePath);
 
@@ -204,6 +220,7 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 	private void rotateTarget() {
 		Matrix matrix = new Matrix();
 		matrix.postRotate(90);
+		iRotateCount++;
 
 		Bitmap bitmapNew = Bitmap.createBitmap(bitmapSelectedImage , 0, 0, bitmapSelectedImage.getWidth(), bitmapSelectedImage.getHeight(), matrix, true);
 		bitmapSelectedImage.recycle();

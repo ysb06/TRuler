@@ -3,6 +3,7 @@
           package="pe.hgs.truler">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -30,7 +31,7 @@
             android:name=".phase.legacy.analysis.SubAssessment"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/NoTitleBarActivity"/>
-        <activity android:name=".phase.legacy.analysis.FinalResult"/>
+        <activity android:name=".phase.FinalResult"/>
         <activity android:name=".phase.legacy.others.MainMenu"/>
         <activity android:name=".phase.legacy.analysis.ProfileGeneration"/>
         <activity
@@ -55,6 +56,12 @@
             android:name=".phase.subphase.PreventionVideo"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/NoTitleBarActivity">
+        </activity>
+        <activity
+            android:name=".phase.ResultFinal01"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+        <activity android:name=".phase.ResultFinal02">
         </activity>
     </application>
 

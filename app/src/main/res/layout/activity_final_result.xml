@@ -1,101 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".phase.legacy.analysis.FinalResult">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:name="pe.hgs.truler.phase.FinalResult01"
+        android:id="@+id/fragment_fr_result"
+        android:layout_weight="22"
+        tools:layout="@layout/activity_final_result_01" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="목-어깨-팔꿈치"
-        android:id="@+id/txtVT1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/text_fr_comment"
+        android:layout_weight="2"
+        android:text="@string/app_name"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="어깨-팔꿈치-손목"
-        android:id="@+id/txtVT2"
-        android:layout_below="@+id/txtVT1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="팔꿈치-어깨-허리"
-        android:id="@+id/txtVT3"
-        android:layout_below="@+id/txtVT2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        <Button
+            android:text="@string/layout_finalresult_button_summary_basic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_fr_summary_basic"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="어깨-허리-무릎"
-        android:id="@+id/txtVT4"
-        android:layout_below="@+id/txtVT3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        <Button
+            android:text="@string/layout_finalresult_button_summary_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_fr_summary_time"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="허리-무릎-발"
-        android:id="@+id/txtVT5"
-        android:layout_below="@+id/txtVT4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        <Button
+            android:text="@string/layout_finalresult_button_upper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_fr_upper"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txtValue1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        <Button
+            android:text="@string/layout_finalresult_text_button_lower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_fr_lower"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txtValue2"
-        android:layout_below="@+id/txtValue1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txtValue3"
-        android:layout_below="@+id/txtValue2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        <Button
+            android:text="@string/layout_finalresult_button_law"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_fr_law"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txtValue4"
-        android:layout_below="@+id/txtValue3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        <Button
+            android:text="@string/layout_finalresult_button_exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_fr_exercise"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txtValue5"
-        android:layout_below="@+id/txtValue4"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
-</RelativeLayout>
+</LinearLayout>

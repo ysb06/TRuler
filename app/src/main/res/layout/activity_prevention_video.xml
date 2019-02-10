@@ -2,32 +2,106 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="pe.hgs.truler.phase.subphase.PreventionVideo">
 
     <VideoView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/video_pv_prevention"
-        android:layout_gravity="center"/>
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"/>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/pv_button_padding"
+            android:paddingRight="@dimen/pv_button_padding">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            <Button
+                android:id="@+id/button_video_01"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/pv_button_padding"
+                android:layout_weight="1"
+                android:background="@drawable/video_button_neck"
+                android:text="@string/layout_video_button_01"
+                android:textSize="@dimen/pv_button_size"/>
+
+            <Button
+                android:id="@+id/button_video_03"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/pv_button_padding"
+                android:layout_marginTop="@dimen/pv_button_padding"
+                android:layout_weight="1"
+                android:background="@drawable/video_button_hand"
+                android:text="@string/layout_video_button_03"
+                android:textSize="@dimen/pv_button_size"/>
+
+            <Button
+                android:id="@+id/button_video_05"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/pv_button_padding"
+                android:layout_weight="1"
+                android:background="@drawable/video_button_ankle"
+                android:text="@string/layout_video_button_05"
+                android:textSize="@dimen/pv_button_size"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/pv_button_padding"
+            android:paddingRight="@dimen/pv_button_padding">
+
+            <Button
+                android:id="@+id/button_video_02"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/pv_button_padding"
+                android:layout_weight="1"
+                android:background="@drawable/video_button_shoulder"
+                android:text="@string/layout_video_button_02"
+                android:textSize="@dimen/pv_button_size"/>
+
+            <Button
+                android:id="@+id/button_video_06"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/pv_button_padding"
+                android:layout_weight="1"
+                android:background="@drawable/video_button_waist"
+                android:text="@string/layout_video_button_06"
+                android:textSize="@dimen/pv_button_size"/>
+
+            <Button
+                android:id="@+id/button_video_04"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/pv_button_padding"
+                android:layout_marginTop="@dimen/pv_button_padding"
+                android:layout_weight="1"
+                android:background="@drawable/video_button_hand"
+                android:text="@string/layout_video_button_04"
+                android:textSize="@dimen/pv_button_size"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

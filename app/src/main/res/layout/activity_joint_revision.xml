@@ -28,23 +28,16 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:id="@+id/image_jr_sample"
-                android:layout_weight="2"
+                android:layout_weight="6"
                 android:src="@drawable/upper106"/>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/image_jr_sample02"
-                android:layout_weight="2"
-                android:src="@drawable/lower100"/>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3">
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <Button
                     android:layout_width="wrap_content"

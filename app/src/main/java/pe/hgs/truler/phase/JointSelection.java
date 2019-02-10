@@ -31,8 +31,10 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 	private Uri uriImagePath;
 
 	private Button btFinish;
+	private Button btRedo;
 	private TextView txtGuide;
 	private ImageView ivScreen;
+	private ImageView ivGuide;
 	private JointView cvDotLayer;
 
 	private boolean isSelecting = true;
@@ -45,11 +47,15 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 		result = new Intent();
 
 		btFinish = (Button) findViewById(R.id.btFinish);
+		btRedo = (Button) findViewById(R.id.button_js_redo);
 		btFinish.setOnClickListener(this);
+		btRedo.setOnClickListener(this);
 		txtGuide = (TextView) findViewById(R.id.textGuide);
 		ivScreen = (ImageView) findViewById(R.id.iScreen);
 		cvDotLayer = (JointView) findViewById(R.id.cView)	;		//관절 선택 표시 뷰 초기화
 		cvDotLayer.addListener(this);
+
+		ivGuide = (ImageView) findViewById(R.id.image_js_guide);
 
 
 		uriImagePath = getIntent().getParcelableExtra(URI_SELECTED_IMAGE);
@@ -152,30 +158,37 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 			case 1:
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_02);
 				joint.setPoint(Joint.JPoint.HEAD);
+				ivGuide.setImageResource(R.drawable.step02);
 				btFinish.setVisibility(View.INVISIBLE);
 				break;
 			case 2:
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_03);
+				ivGuide.setImageResource(R.drawable.step03);
 				joint.setPoint(Joint.JPoint.SHOULDER);
 				break;
 			case 3:
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_04);
+				ivGuide.setImageResource(R.drawable.step04);
 				joint.setPoint(Joint.JPoint.ELBOW);
 				break;
 			case 4:
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_05);
+				ivGuide.setImageResource(R.drawable.step05);
 				joint.setPoint(Joint.JPoint.WRIST);
 				break;
 			case 5:
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_06);
+				ivGuide.setImageResource(R.drawable.step06);
 				joint.setPoint(Joint.JPoint.WAIST);
 				break;
 			case 6:
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_07);
+				ivGuide.setImageResource(R.drawable.step07);
 				joint.setPoint(Joint.JPoint.KNEE);
 				break;
 			case 7:
 				txtGuide.setText(R.string.layout_jointselection_textview_guide_08);
+				ivGuide.setVisibility(View.INVISIBLE);
 				joint.setPoint(Joint.JPoint.FOOT);
 				btFinish.setVisibility(View.VISIBLE);
 				btFinish.setText(R.string.layout_jointselection_button_finish);
@@ -190,27 +203,43 @@ public class JointSelection extends AppCompatActivity implements JointViewListen
 
 	@Override
 	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.btFinish:
+				if(isSelecting) {
+					rotateTarget();
+				} else {
+					Joint[] list = cvDotLayer.getJointsList();
+					result.putExtra(JOINT_HEAD, list[0]);
+					result.putExtra(JOINT_SHOULDER, list[1]);
+					result.putExtra(JOINT_ELBOW, list[2]);
+					result.putExtra(JOINT_WRIST, list[3]);
+					result.putExtra(JOINT_WAIST, list[4]);
+					result.putExtra(JOINT_KNEE, list[5]);
+					result.putExtra(JOINT_FOOT, list[6]);
+					int temp = iRotateCount % 4;
+					result.putExtra(NUMBER_IMAGE_ROTATE, temp);
+					result.putExtra("JointSelection_08_List", list);            // TODO: 2016-08-15 추후 이것만 사용할 것인지 위에 따로따로 저장된 것만 사용할 것인지 정할 것
+					result.putExtra("JointSelection_09_Image_Path", uriImagePath);
 
-		if(isSelecting) {
-			rotateTarget();
-		} else {
-			Joint[] list = cvDotLayer.getJointsList();
-			result.putExtra(JOINT_HEAD, list[0]);
-			result.putExtra(JOINT_SHOULDER, list[1]);
-			result.putExtra(JOINT_ELBOW, list[2]);
-			result.putExtra(JOINT_WRIST, list[3]);
-			result.putExtra(JOINT_WAIST, list[4]);
-			result.putExtra(JOINT_KNEE, list[5]);
-			result.putExtra(JOINT_FOOT, list[6]);
-			int temp = iRotateCount % 4;
-			result.putExtra(NUMBER_IMAGE_ROTATE, temp);
-			result.putExtra("JointSelection_08_List", list);            // TODO: 2016-08-15 추후 이것만 사용할 것인지 위에 따로따로 저장된 것만 사용할 것인지 정할 것
-			result.putExtra("JointSelection_09_Image_Path", uriImagePath);
-
-			setResult(RESULT_OK, result);
-			ivScreen.setImageDrawable(null);
-			finish();
+					setResult(RESULT_OK, result);
+					ivScreen.setImageDrawable(null);
+					finish();
+				}
+				break;
+			case R.id.button_js_redo:
+				initialize();
+				break;
 		}
+	}
+
+	private void initialize() {
+		isSelecting = true;
+		btFinish.setText(R.string.layout_jointselection_button_finish_rotate);
+		btFinish.setVisibility(View.VISIBLE);
+		txtGuide.setText(R.string.layout_jointselection_textview_guide_01);
+		ivGuide.setImageResource(R.drawable.step01);
+		ivGuide.setVisibility(View.VISIBLE);
+		cvDotLayer.reset();
 	}
 
 	// TODO: 2016-09-24 따로 여기에서만 사용하는 이미지 클래스를 만들 것. 그리고 이 메서드 그리고 ImageLoader의 rotate메서드를 합칠 것

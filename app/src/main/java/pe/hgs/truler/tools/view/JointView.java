@@ -81,4 +81,10 @@ public class JointView extends View implements View.OnTouchListener {
 		}
 		return true;
 	}
+
+	public void reset() {
+		isInputAvailable = true;
+		joints.clear();
+		this.invalidate();
+	}
 }

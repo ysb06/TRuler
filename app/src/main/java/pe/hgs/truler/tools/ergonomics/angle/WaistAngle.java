@@ -5,4 +5,5 @@ package pe.hgs.truler.tools.ergonomics.angle;
  */
 
 public enum WaistAngle {
+	W30, W45, W60, W90, W120, W180
 }

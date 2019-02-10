@@ -29,10 +29,19 @@ public class PostureAnalyzer
 	public static final int[] RISK_LV2_UPPER_POSTURE_TIME 	= {8, 7, 2, 2, 1, -1, -1, -1, 1, -1, -1, -1, 1, 1};
 	public static final int[] RISK_LV3_UPPER_POSTURE_TIME 	= {17, 14, 9, 8, 5, 2, 2, -1, 2, 5, 2, 4, 6, 5};
 
+	public static final int[] RISK_LV1_LOWER_POSTURE_TIME 	= {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 2};
+	public static final int[] RISK_LV2_LOWER_POSTURE_TIME 	= {11, -1, -1, -1, -1, -1, -1, -1, -1, 11, 2, 13, 18};
+	public static final int[] RISK_LV3_LOWER_POSTURE_TIME 	= {33, 12, -1, -1, -1, 9, 3, 4, 5, 35, 18, 38, 57};
+
+	/* 이전 계산 값
+	public static final int[] RISK_LV1_UPPER_POSTURE_TIME 	= {3, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+	public static final int[] RISK_LV2_UPPER_POSTURE_TIME 	= {8, 7, 2, 2, 1, -1, -1, -1, 1, -1, -1, -1, 1, 1};
+	public static final int[] RISK_LV3_UPPER_POSTURE_TIME 	= {17, 14, 9, 8, 5, 2, 2, -1, 2, 5, 2, 4, 6, 5};
+
 	public static final int[] RISK_LV1_LOWER_POSTURE_TIME 	= {2, -1, -1, -1, -1, -1, -1, -1, -1, 2, 1, 2, 2};
 	public static final int[] RISK_LV2_LOWER_POSTURE_TIME 	= {11, 8, -1, -1, -1, 2, 2, 2, 2, 11, 2, 13, 18};
 	public static final int[] RISK_LV3_LOWER_POSTURE_TIME 	= {33, 12, -1, -1, -1, 9, 3, 4, 5, 35, 18, 38, 57};
-
+	//*/
 	/* 이전 그림 ID
 	public static final int[] IMAGE_ID_UPPER_POSTURE 	= { R.drawable.upper01, R.drawable.upper02, R.drawable.upper03, R.drawable.upper04, R.drawable.upper05, R.drawable.upper06, R.drawable.upper07,
 																	R.drawable.upper08, R.drawable.upper09, R.drawable.upper10, R.drawable.upper11, R.drawable.upper12, R.drawable.upper13, R.drawable.upper14,};
@@ -179,9 +188,9 @@ public class PostureAnalyzer
 		for(int i = 0; i < NAME_UPPER_POSTURE.length; i++) {
 			if(NAME_UPPER_POSTURE[i].equals(posture.getName())) {
 				if(i < NAME_UPPER_POSTURE.length - 1) {
-					return new Posture(Posture.PostureType.UPPER, NAME_UPPER_POSTURE[i + 1]);
+					return new Posture(PostureType.UPPER, NAME_UPPER_POSTURE[i + 1]);
 				} else {
-					return new Posture(Posture.PostureType.UPPER, NAME_UPPER_POSTURE[0]);
+					return new Posture(PostureType.UPPER, NAME_UPPER_POSTURE[0]);
 				}
 			}
 		}
@@ -189,9 +198,9 @@ public class PostureAnalyzer
 		for(int i = 0; i < NAME_LOWER_POSTURE.length; i++) {
 			if(NAME_LOWER_POSTURE[i].equals(posture.getName())) {
 				if(i < NAME_LOWER_POSTURE.length - 1) {
-					return new Posture(Posture.PostureType.LOWER, NAME_LOWER_POSTURE[i + 1]);
+					return new Posture(PostureType.LOWER, NAME_LOWER_POSTURE[i + 1]);
 				} else {
-					return new Posture(Posture.PostureType.LOWER, NAME_LOWER_POSTURE[0]);
+					return new Posture(PostureType.LOWER, NAME_LOWER_POSTURE[0]);
 				}
 			}
 		}
@@ -209,9 +218,9 @@ public class PostureAnalyzer
 		for(int i = 0; i < NAME_UPPER_POSTURE.length; i++) {
 			if(NAME_UPPER_POSTURE[i].equals(posture.getName())) {
 				if(i > 0) {
-					return new Posture(Posture.PostureType.UPPER, NAME_UPPER_POSTURE[i - 1]);
+					return new Posture(PostureType.UPPER, NAME_UPPER_POSTURE[i - 1]);
 				} else {
-					return new Posture(Posture.PostureType.UPPER, NAME_UPPER_POSTURE[NAME_UPPER_POSTURE.length - 1]);
+					return new Posture(PostureType.UPPER, NAME_UPPER_POSTURE[NAME_UPPER_POSTURE.length - 1]);
 				}
 			}
 		}
@@ -219,9 +228,9 @@ public class PostureAnalyzer
 		for(int i = 0; i < NAME_LOWER_POSTURE.length; i++) {
 			if(NAME_LOWER_POSTURE[i].equals(posture.getName())) {
 				if(i > 0) {
-					return new Posture(Posture.PostureType.LOWER, NAME_LOWER_POSTURE[i - 1]);
+					return new Posture(PostureType.LOWER, NAME_LOWER_POSTURE[i - 1]);
 				} else {
-					return new Posture(Posture.PostureType.LOWER, NAME_LOWER_POSTURE[NAME_LOWER_POSTURE.length - 1]);
+					return new Posture(PostureType.LOWER, NAME_LOWER_POSTURE[NAME_LOWER_POSTURE.length - 1]);
 				}
 			}
 		}
@@ -233,12 +242,16 @@ public class PostureAnalyzer
 		if(isDefined(posture))
 			return posture;
 		else {
-			Logger.debug("The Posture is revised from " + posture.getName());
 			String str = posture.getName();
 			if(str.equals("B45-S90-E90")) {
-				return new Posture(Posture.PostureType.UPPER, "B45-S90-E45");
+				Logger.debug("The Posture is revised from " + str + " to B45-S90-E45");
+				return new Posture(PostureType.UPPER, "B45-S90-E45");
 			} else if(str.equals("B45-S45-E90")) {
-				return new Posture(Posture.PostureType.UPPER, "B45-S45-E45");
+				Logger.debug("The Posture is revised from " + str + " to B45-S45-E45");
+				return new Posture(PostureType.UPPER, "B45-S45-E45");
+			} else if(str.equals("B90-S120-E0")) {
+				Logger.debug("The Posture is revised from " + str + " to B90-S90-E0");
+				return new Posture(PostureType.UPPER, "B90-S90-E0");
 			}
 			// TODO: 2016-09-27 상지 보정 코드 작성
 			return posture;

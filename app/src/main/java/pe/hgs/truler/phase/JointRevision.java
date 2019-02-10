@@ -13,10 +13,12 @@ import android.widget.TextView;
 import pe.hgs.truler.R;
 import pe.hgs.truler.tools.ImageLoader;
 import pe.hgs.truler.tools.Logger;
+import pe.hgs.truler.tools.ergonomics.ErgoDatabase;
 import pe.hgs.truler.tools.ergonomics.Joint;
 import pe.hgs.truler.tools.ergonomics.BoneStructure;
 import pe.hgs.truler.tools.ergonomics.Posture;
 import pe.hgs.truler.tools.ergonomics.PostureAnalyzer;
+import pe.hgs.truler.tools.ergonomics.PostureType;
 
 public class JointRevision extends AppCompatActivity implements View.OnClickListener, Phase {
 
@@ -29,7 +31,6 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 
 	private ImageView ivTarget;
 	private ImageView ivSample;
-	private ImageView ivSampleLower;
 	private Button btYes;
 
 	private Button btNo;
@@ -46,7 +47,6 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 
 		ivTarget = (ImageView) findViewById(R.id.image_jr_target);
 		ivSample = (ImageView) findViewById(R.id.image_jr_sample);
-		ivSampleLower = (ImageView) findViewById(R.id.image_jr_sample02) ;
 		btYes = (Button) findViewById(R.id.button_jr_yes);
 		btYes.setOnClickListener(this);
 
@@ -70,17 +70,17 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 
 		bsHuman = new BoneStructure(joints);
 
-		postureFinalUpper = bsHuman.getPosture(Posture.PostureType.UPPER);
+		postureFinalUpper = bsHuman.getPosture(PostureType.UPPER);
 		postureFinalUpper = pra.getSimilarPosture(postureFinalUpper);				//상지 보정
 		if(!pra.isDefined(postureFinalUpper)) {
-			postureFinalUpper = new Posture(Posture.PostureType.UPPER);
+			postureFinalUpper = new Posture(PostureType.UPPER);
 			Logger.warn("The upper posture is not defined. Set to default");
 		}
 
 
-		postureFinalLower = bsHuman.getPosture(Posture.PostureType.LOWER);
+		postureFinalLower = bsHuman.getPosture(PostureType.LOWER);
 		if(!pra.isDefined(postureFinalLower)) {
-			postureFinalLower = new Posture(Posture.PostureType.LOWER);
+			postureFinalLower = new Posture(PostureType.LOWER);
 			Logger.error("The lower posture is not defined!!");
 		}
 
@@ -115,14 +115,14 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 
 			bsHuman = new BoneStructure(joints);
 
-			postureFinalUpper = bsHuman.getPosture(Posture.PostureType.UPPER);
+			postureFinalUpper = bsHuman.getPosture(PostureType.UPPER);
 			if(!pra.isDefined(postureFinalUpper)) {
-				postureFinalUpper = new Posture(Posture.PostureType.UPPER);
+				postureFinalUpper = new Posture(PostureType.UPPER);
 				Logger.warn("The upper posture is not defined. Set to default");
 			}
-			postureFinalLower = bsHuman.getPosture(Posture.PostureType.LOWER);
+			postureFinalLower = bsHuman.getPosture(PostureType.LOWER);
 			if(!pra.isDefined(postureFinalLower)) {
-				postureFinalLower = new Posture(Posture.PostureType.LOWER);
+				postureFinalLower = new Posture(PostureType.LOWER);
 				Logger.error("The lower posture is not defined!!");
 			}
 
@@ -167,7 +167,7 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 					setResult(RESULT_OK, result);
 					finish();
 				} else {		//상지 선택 완료 시, 하지 선택으로 넘어가야 함
-					setLowerImage(postureFinalLower);
+					setCompleteImage(postureFinalUpper, postureFinalLower);
 					TextView guideTitle = (TextView) findViewById(R.id.text_jr_body);
 					guideTitle.setText(getText(R.string.layout_jointrevision_textview_lower));
 					isUpperOK = true;
@@ -178,14 +178,14 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 					postureFinalLower = pra.getPrevPosture(postureFinalLower);
 					if(postureFinalLower == null) {			//하지는 절대 null 이 반환될 수 없음
 						Logger.error("Lower posture is null");
-						postureFinalLower = new Posture(Posture.PostureType.LOWER);
+						postureFinalLower = new Posture(PostureType.LOWER);
 					}
-					setLowerImage(postureFinalLower);
+					setCompleteImage(postureFinalUpper, postureFinalLower);
 				} else {	//상지 선택 단계에서
 					postureFinalUpper = pra.getPrevPosture(postureFinalUpper);		//정의되지 않은 상지 자세의 경우 이 단계에서 null 이 반환됨
 					if(postureFinalUpper == null) {
 						Logger.warn("Upper posture is null");
-						postureFinalUpper = new Posture(Posture.PostureType.UPPER);
+						postureFinalUpper = new Posture(PostureType.UPPER);
 					}
 					setUpperImage(postureFinalUpper);
 				}
@@ -195,14 +195,14 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 					postureFinalLower = pra.getNextPosture(postureFinalLower);
 					if(postureFinalLower == null) {			//하지는 절대 null 이 반환될 수 없음
 						Logger.error("Lower posture is null");
-						postureFinalLower = new Posture(Posture.PostureType.LOWER);
+						postureFinalLower = new Posture(PostureType.LOWER);
 					}
-					setLowerImage(postureFinalLower);
+					setCompleteImage(postureFinalUpper, postureFinalLower);
 				} else {	//상지 선택 단계에서
 					postureFinalUpper = pra.getNextPosture(postureFinalUpper);		//정의되지 않은 상지 자세의 경우 이 단계에서 null 이 반환됨
 					if(postureFinalUpper == null) {
 						Logger.warn("Upper posture is null");
-						postureFinalUpper = new Posture(Posture.PostureType.UPPER);
+						postureFinalUpper = new Posture(PostureType.UPPER);
 					}
 					setUpperImage(postureFinalUpper);
 				}
@@ -214,19 +214,11 @@ public class JointRevision extends AppCompatActivity implements View.OnClickList
 		}
 	}
 
-	private void setUpperImage(Posture posture) {
-		if(pra.isDefined(posture)) {
-			ivSample.setImageResource(pra.getImageID(posture));
-		} else {
-			Logger.error("The posture is not defined");
-		}
+	private void setUpperImage(Posture upper) {
+		ivSample.setImageResource(ErgoDatabase.getInstance().getPostureImageID(upper));
 	}
 
-	private void setLowerImage(Posture posture) {
-		if(pra.isDefined(posture)) {
-			ivSampleLower.setImageResource(pra.getImageID(posture));
-		} else {
-			Logger.error("The posture is not defined");
-		}
+	private void setCompleteImage(Posture upper, Posture lower) {
+		ivSample.setImageResource(ErgoDatabase.getInstance().getPostureImageID(this, upper, lower));
 	}
 }

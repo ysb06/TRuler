@@ -31,8 +31,7 @@
             android:name=".phase.legacy.analysis.SubAssessment"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/NoTitleBarActivity"/>
-        <activity android:name=".phase.FinalResult"/>
-        <activity android:name=".phase.legacy.others.MainMenu"/>
+        <activity android:name=".phase.MainMenu"/>
         <activity android:name=".phase.legacy.analysis.ProfileGeneration"/>
         <activity
             android:name=".phase.TaskInfo"
@@ -45,7 +44,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
-            android:name=".phase.ResultFinal"
+            android:name=".phase.legacy.ResultFinal"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity android:name=".tools.LogWindow">
@@ -60,8 +59,6 @@
         <activity
             android:name=".phase.ResultFinal01"
             android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
-        <activity android:name=".phase.ResultFinal02">
         </activity>
     </application>
 

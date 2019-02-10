@@ -33,30 +33,33 @@ public class ResultView extends ImageView {
 
 	private Paint paintMark;
 	private Matrix matrix;
-	private float fZoomScale = 0;
+	private float fZoomScale = 0.7f;
 	private float fImageX = 0;
 	private float fImageY = 0;
-	private float fImageXMin = -1000;
-	private float fImageXMax = 10;
-	private float fImageYMin = -1000;
-	private float fImageYMax = 10;
+	private final float fImageXMin = -1000;
+	private final float fImageXMax = 10;
+	private final float fImageYMin = -1000;
+	private final float fImageYMax = 10;
 
 	public ResultView(Context context) {
 		super(context);
 		initializeMark();
 		matrix = new Matrix();
+		matrix.postScale(10, 10);
 	}
 
 	public ResultView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initializeMark();
 		matrix = new Matrix();
+		matrix.postScale(10, 10);
 	}
 
 	public ResultView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		initializeMark();
 		matrix = new Matrix();
+		matrix.postScale(10, 10);
 	}
 
 	float fPrevPinch = 0;
@@ -103,6 +106,17 @@ public class ResultView extends ImageView {
 				break;
 		}
 		return true;
+	}
+
+	@Override
+	public void setImageBitmap(Bitmap bm) {
+		super.setImageBitmap(bm);
+
+		matrix.setScale(fZoomScale, fZoomScale);
+		matrix.postTranslate(fImageX, fImageY);
+
+		setImageMatrix(matrix);
+		invalidate();
 	}
 
 	/** 핀치가 발생했을 때 실행
@@ -213,7 +227,8 @@ public class ResultView extends ImageView {
 				Logger.error(this.getClass(), "No defined orientation");
 				return;
 		}
-		int pos = PostureAnalyzer.getOrder(posture);
+		PostureAnalyzer pa = new PostureAnalyzer();
+		int pos = pa.getOrder(posture);
 
 		reimage(src, fMarkOX + (fMarkIntervalX * pos), fMarkOY + (fMarkIntervalY * (risk - 1)), MARK_SIZE);
 		src.recycle();
@@ -247,7 +262,8 @@ public class ResultView extends ImageView {
 				return;
 		}
 
-		int pos = PostureAnalyzer.getOrder(posture);
+		PostureAnalyzer pa = new PostureAnalyzer();
+		int pos = pa.getOrder(posture);
 
 		reimage(src, fMarkOX + (fMarkIntervalX * pos), fMarkOY + (fMarkIntervalY * (risk - 1)), MARK_SIZE);
 		src.recycle();

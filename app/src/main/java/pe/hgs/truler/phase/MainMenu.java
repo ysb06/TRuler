@@ -20,11 +20,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 		findViewById(R.id.button_mm_run).setOnClickListener(this);
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
-
 	@Override
 	public void onClick(View view) {
 		setResult(RESULT_OK);

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:TRulerX.Pages"
+            x:Class="TRulerX.Pages.AnalysisPage">
+
+    <local:TitlePage Title="정보"/>
+    <ContentPage Title="이미지" />
+    <ContentPage Title="관절" />
+    <ContentPage Title="자세" />
+    <ContentPage Title="결과" />
+</TabbedPage>

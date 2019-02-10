@@ -8,7 +8,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:name="pe.hgs.truler.phase.FinalResult01"
+        android:name="pe.hgs.truler.phase.legacy.FinalResult01"
         android:id="@+id/fragment_fr_result"
         android:layout_weight="22"
         tools:layout="@layout/activity_final_result_01" />
@@ -62,7 +62,7 @@
         android:layout_weight="3">
 
         <Button
-            android:text="@string/layout_finalresult_button_law"
+            android:text="@string/layout_finalresult_button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_fr_law"

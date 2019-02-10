@@ -6,13 +6,12 @@ import pe.hgs.truler.tools.ergonomics.angle.ElbowAngle;
 import pe.hgs.truler.tools.ergonomics.angle.FootAngle;
 import pe.hgs.truler.tools.ergonomics.angle.KneeAngle;
 import pe.hgs.truler.tools.ergonomics.angle.ShoulderAngle;
+import pe.hgs.truler.tools.ergonomics.angle.WaistAngle;
 
 /**
  * Created by ysb06 on 2016-08-19.
  */
 public class Posture {
-
-	public enum PostureType { UPPER, LOWER }
 
 	private PostureType pType = PostureType.UPPER;
 	private String pName = "";
@@ -39,12 +38,40 @@ public class Posture {
 		pName = backAngle + "-" + shoulderAngle + "-" + elbowAngle;
 	}
 
-	public Posture(KneeAngle kneeAngle, FootAngle footAngle) {
+	public Posture(WaistAngle waistAngle, KneeAngle kneeAngle, FootAngle footAngle) {
 		pType = PostureType.LOWER;
 
 		switch (footAngle) {
-			case F120:
-				pName = "SC0";
+			case F120:		//120도이지만 오른쪽 60도로 가정
+				switch (kneeAngle) {
+					case K180:
+						Logger.warn("선 자세에서 알 수 없는 무릎 각도 (" + kneeAngle + ")");
+						pName = "STD";
+						break;
+					case K150:
+						pName = "KF150";
+						break;
+					case K120:
+						pName = "KF120";
+						break;
+					case K90:
+						if(waistAngle == WaistAngle.W45) {
+							pName = "SC0";
+						} else {
+							pName = "KF90";
+						}
+						break;
+					case K60:
+						if(waistAngle == WaistAngle.W30) {
+							pName = "SC0";
+						} else {
+							pName = "KF60";
+						}
+						break;
+					case K30:
+						pName = "KF30";
+						break;
+				}
 				break;
 			case F90:			//Sitting
 				switch (kneeAngle) {
@@ -54,6 +81,9 @@ public class Posture {
 						break;
 					case K90:
 						pName = "SC40";
+						break;
+					case K150:		//정의되지 않았지만 비슷한 자세로 제공
+						pName = "KF90";
 						break;
 					case K180:
 						pName = "STD";
@@ -77,10 +107,18 @@ public class Posture {
 						pName = "KF120";
 						break;
 					case K90:
-						pName = "KF90";
+						if(waistAngle == WaistAngle.W45) {
+							pName = "SC0";
+						} else {
+							pName = "KF90";
+						}
 						break;
 					case K60:
-						pName = "KF60";
+						if(waistAngle == WaistAngle.W30) {
+							pName = "SC0";
+						} else {
+							pName = "KF60";
+						}
 						break;
 					case K30:
 						pName = "KF30";

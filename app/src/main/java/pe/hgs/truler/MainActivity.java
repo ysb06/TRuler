@@ -1,24 +1,24 @@
+/***************
+ * 만든 사람 : 임승빈
+ *
+ * 전체적으로 앱 구조가 엉망으로 되어 있음.
+ * 앱 전체를 재설계할 필요가 있음
+ ***************/
+
 package pe.hgs.truler;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import pe.hgs.truler.phase.FinalResult;
 import pe.hgs.truler.phase.JointRevision;
 import pe.hgs.truler.phase.JointSelection;
 import pe.hgs.truler.phase.Phase;
-import pe.hgs.truler.phase.ResultFinal;
+import pe.hgs.truler.phase.ResultFinal01;
 import pe.hgs.truler.phase.TaskInfo;
-import pe.hgs.truler.phase.legacy.others.MainMenu;
+import pe.hgs.truler.phase.MainMenu;
 import pe.hgs.truler.tools.FileManager;
 import pe.hgs.truler.tools.Logger;
 import pe.hgs.truler.tools.ergonomics.Joint;
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements Phase {
 	private String sLocation = "";
 	private int iWorkTime = 0;
 	private String sAssessor = "";
+	private String sNeckBand = "";
 
 	private Uri uriImage;
 
@@ -145,7 +146,10 @@ public class MainActivity extends AppCompatActivity implements Phase {
 					iLowerRisk = data.getIntExtra(RESULT_LOWER_BASIC, 0);
 					iLowerTimeRisk = data.getIntExtra(RESULT_LOWER_TIME, 0);
 
-					Intent intent = new Intent(this, ResultFinal.class);
+					Intent intent = new Intent(this, ResultFinal01.class);
+
+					Logger.debug(sUpperName + ": " + iUpperRisk + ", " + iUpperTimeRisk);
+					Logger.debug(sLowerName + ": " + iLowerRisk + ", " + iLowerTimeRisk);
 
 					intent.putExtra(RESULT_UPPER_NAME, sUpperName);
 					intent.putExtra(RESULT_UPPER_BASIC, iUpperRisk);
@@ -153,7 +157,16 @@ public class MainActivity extends AppCompatActivity implements Phase {
 					intent.putExtra(RESULT_LOWER_NAME, sLowerName);
 					intent.putExtra(RESULT_LOWER_BASIC, iLowerRisk);
 					intent.putExtra(RESULT_LOWER_TIME, iLowerTimeRisk);
+					intent.putExtra(INFO_WORKER, sWorker);
+					intent.putExtra(INFO_CROP, sCrop);
+					intent.putExtra(INFO_TASK, sTask);
+					intent.putExtra(INFO_SUB_TASK, sSubTask);
+					intent.putExtra(INFO_LOCATION, sLocation);
+					intent.putExtra(INFO_WEIGHT, "0");
+					intent.putExtra(INFO_ACT_POINT, "등");
 					intent.putExtra(INFO_WORK_TIME, iWorkTime);
+					intent.putExtra(INFO_ASSESSOR, sAssessor);
+					intent.putExtra(INFO_NECK_BAND, sNeckBand);
 
 					startActivityForResult(intent, Phase.PHASE_RESULT);
 				} else if(resultCode == RESULT_CANCELED) {
@@ -167,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements Phase {
 				if(resultCode == RESULT_OK) {
 					// TODO: 2016-09-27 데이터 저장 기능 추가
 					Logger.debug("Complete!");
-					save();
 				} else if(resultCode == RESULT_CANCELED) {
 					runJointRevision();
 				} else {
@@ -189,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements Phase {
 		sLocation = data.getStringExtra(INFO_LOCATION);
 		iWorkTime = data.getIntExtra(INFO_WORK_TIME, 0);
 		sAssessor = data.getStringExtra(INFO_ASSESSOR);		//입력 받은 정보 추출
+		sNeckBand = data.getStringExtra(INFO_NECK_BAND);
 	}
 
 	/** 이미지 선택 창 실행

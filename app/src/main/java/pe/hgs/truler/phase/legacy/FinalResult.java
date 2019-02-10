@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import pe.hgs.truler.R;
+import pe.hgs.truler.phase.Phase;
 import pe.hgs.truler.phase.subphase.PreventionGuide;
 import pe.hgs.truler.phase.subphase.PreventionVideo;
 import pe.hgs.truler.tools.LogWindow;

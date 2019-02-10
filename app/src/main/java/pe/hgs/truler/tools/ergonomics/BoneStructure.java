@@ -6,6 +6,7 @@ import pe.hgs.truler.tools.ergonomics.angle.ElbowAngle;
 import pe.hgs.truler.tools.ergonomics.angle.FootAngle;
 import pe.hgs.truler.tools.ergonomics.angle.KneeAngle;
 import pe.hgs.truler.tools.ergonomics.angle.ShoulderAngle;
+import pe.hgs.truler.tools.ergonomics.angle.WaistAngle;
 
 /** 평가 대상을 나타내는 객체, 각 Joint 들이 이루는 각도 그리고 이러한 각도에 따른 자세에 대한 정보 포함.
  * Created by ysb06 on 2016-08-15.
@@ -35,6 +36,7 @@ public class BoneStructure {
 	private ShoulderAngle shoulderAngle = ShoulderAngle.S0;
 	private ElbowAngle elbowAngle = ElbowAngle.E0;
 
+	private WaistAngle waistAngle = WaistAngle.W120;
 	private KneeAngle kneeAngle = KneeAngle.K30;
 	private FootAngle footAngle = FootAngle.F0;
 
@@ -63,9 +65,9 @@ public class BoneStructure {
 
 		analyzeUpperPosture();
 		analyzeLowerPosture();
-		Logger.debug("<Back " + backAngle + ">, <Shoulder " + shoulderAngle + ">, <Elbow " + elbowAngle + ">, <Knee " + kneeAngle + ">, <Foot " + footAngle + ">");
+		Logger.debug("<Back " + backAngle + ">, <Shoulder " + shoulderAngle + ">, <Elbow " + elbowAngle + ">, <Waist " + waistAngle + ">, <Knee " + kneeAngle + ">, <Foot " + footAngle + ">");
 		postureUpper = new Posture(backAngle, shoulderAngle, elbowAngle);
-		postureLower = new Posture(kneeAngle, footAngle);
+		postureLower = new Posture(waistAngle, kneeAngle, footAngle);
 
 		Logger.debug("Upper -> " + postureUpper.getName() + ",\tLower -> " + postureLower.getName());
 	}
@@ -92,7 +94,7 @@ public class BoneStructure {
 		}
 	}
 
-	public Posture getPosture(Posture.PostureType type) {
+	public Posture getPosture(PostureType type) {
 		switch (type) {
 			case UPPER:
 				return postureUpper;
@@ -150,9 +152,28 @@ public class BoneStructure {
 
 	/**	하지 자세 측정 및 기록 */
 	private void analyzeLowerPosture() {
+		double waistAngle = Math.abs(getAngle(SH_WA_KN));
 		double kneeAngle = Math.abs(getAngle(WA_KN_FO));
 		double footAngle = Math.abs(getAngle(KN_FO_GR));
 
+		//허리 각도
+		if(waistAngle < 5 * Math.PI / 24) {
+			this.waistAngle = WaistAngle.W30;
+		} else if(waistAngle >= 5 * Math.PI / 24 && waistAngle <  7 * Math.PI / 24) {
+			this.waistAngle = WaistAngle.W45;
+		} else if(waistAngle >= 7 * Math.PI / 24 && waistAngle < 5 * Math.PI / 12) {
+			this.waistAngle = WaistAngle.W60;
+		} else if(waistAngle >= 5 * Math.PI / 12 && waistAngle < 7 * Math.PI / 12) {
+			this.waistAngle = WaistAngle.W90;
+		} else if(waistAngle >= 7 * Math.PI / 12 && waistAngle < 5 * Math.PI / 6) {
+			this.waistAngle = WaistAngle.W120;
+		} else if(waistAngle >= 5 * Math.PI / 6 && waistAngle < 15 * Math.PI / 12) {
+			this.waistAngle = WaistAngle.W180;
+		} else {
+			this.waistAngle = null;
+		}
+
+		//무릎
 		if(kneeAngle < Math.PI / 4) {
 			this.kneeAngle = KneeAngle.K30;
 		} else if(kneeAngle >= Math.PI / 4 && kneeAngle < 5 * Math.PI / 12) {
@@ -169,6 +190,7 @@ public class BoneStructure {
 			this.kneeAngle = null;
 		}
 
+		//지면과 다리의 각도
 		if(footAngle < Math.PI / 6) {
 			this.footAngle = FootAngle.F0;
 		} else if(footAngle >= Math.PI / 6 && footAngle < 5 * Math.PI / 12) {

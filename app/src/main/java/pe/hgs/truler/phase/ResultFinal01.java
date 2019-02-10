@@ -1,11 +1,14 @@
 package pe.hgs.truler.phase;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,17 +17,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import pe.hgs.truler.R;
+import pe.hgs.truler.phase.subphase.PreventionVideo;
+import pe.hgs.truler.tools.DateLoader;
+import pe.hgs.truler.tools.FileManager;
 import pe.hgs.truler.tools.LogWindow;
 import pe.hgs.truler.tools.Logger;
+import pe.hgs.truler.tools.ergonomics.ErgoDatabase;
 import pe.hgs.truler.tools.ergonomics.PostureAnalyzer;
 import pe.hgs.truler.tools.view.ResultView;
 
 import static pe.hgs.truler.phase.Phase.*;
 
-/** 종합 결과 NT <-> T
- *
+/**
+ * 종합 결과 NT <-> T
  */
 public class ResultFinal01 extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,7 +59,16 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 	private int iLowerRisk = 0;
 	private int iLowerTimeRisk = 0;
 
+	private String sWorker = "";
+	private String sCrop = "";
+	private String sTask = "";
+	private String sSubTask = "";
+	private String sLocation = "";
 	private int iWorkTime = 0;
+	private String sAssessor = "";
+	private String sWeight = "";
+	private String sActPoint = "";
+	private String sNeckBand = "";
 
 	private TextView textComment;
 	private TextView textUpperRisk;
@@ -63,13 +80,19 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 	private Button buttonLaw;
 	private Button buttonVideo;
 	private ResultView resultView;
-	private ImageView imageUpper;
-	private ImageView imageLower;
+	private ImageView imagePosture;
 
 	private Bitmap bitmapNormalResult;
 	private Bitmap bitmapTimeResult;
 	private Bitmap bitmapUpperResult;
 	private Bitmap bitmapLowerResult;
+
+	//위험 부위
+	private boolean bDangerEl = false;    //팔꿈치
+	private boolean bDangerSh = false;    //어깨
+	private boolean bDangerWa = false;    //허리
+	private boolean bDangerKn = false;    //무릎
+	private boolean bDangerAn = false;    //발목
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +107,16 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 		iLowerRisk = getIntent().getIntExtra(RESULT_LOWER_BASIC, 0);
 		iLowerTimeRisk = getIntent().getIntExtra(RESULT_LOWER_TIME, 0);
 
+		sWorker = getIntent().getStringExtra(INFO_WORKER);
+		sCrop = getIntent().getStringExtra(INFO_CROP);
+		sTask = getIntent().getStringExtra(INFO_TASK);
+		sSubTask = getIntent().getStringExtra(INFO_SUB_TASK);
+		sLocation = getIntent().getStringExtra(INFO_LOCATION);
 		iWorkTime = getIntent().getIntExtra(INFO_WORK_TIME, 0);
-
+		sAssessor = getIntent().getStringExtra(INFO_ASSESSOR);
+		sWeight = getIntent().getStringExtra(INFO_WEIGHT);
+		sActPoint = getIntent().getStringExtra(INFO_ACT_POINT);
+		sNeckBand = getIntent().getStringExtra(INFO_NECK_BAND);
 
 		textComment = (TextView) findViewById(R.id.text_rf1_comment);
 		textUpperRisk = (TextView) findViewById(R.id.text_rf1_upper_risk);
@@ -94,11 +125,10 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 		buttonTimeSummary = (Button) findViewById(R.id.button_rf1_summary_time);
 		buttonUpper = (Button) findViewById(R.id.button_rf1_upper);
 		buttonLower = (Button) findViewById(R.id.button_rf1_lower);
-		buttonLaw = (Button) findViewById(R.id.button_rf1_law);
+		buttonLaw = (Button) findViewById(R.id.button_rf1_save);
 		buttonVideo = (Button) findViewById(R.id.button_rf1_exercise);
 		resultView = (ResultView) findViewById(R.id.result_rf1);
-		imageUpper = (ImageView) findViewById(R.id.image_rf1_upper);
-		imageLower = (ImageView) findViewById(R.id.image_rf1_lower);
+		imagePosture = (ImageView) findViewById(R.id.image_rf1_upper);
 
 		buttonSummary.setOnClickListener(this);
 		buttonTimeSummary.setOnClickListener(this);
@@ -107,20 +137,8 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 		buttonLaw.setOnClickListener(this);
 		buttonVideo.setOnClickListener(this);
 
-		int idUpper = pa.getOrder(sUpperName);		//상지 이미지 설정
-		if(idUpper != -1)
-			idUpper = PostureAnalyzer.IMAGE_ID_UPPER_POSTURE[idUpper];
-		else
-			idUpper = R.drawable.noimage;
-		imageUpper.setImageResource(idUpper);
-
-		int idLower = pa.getOrder(sLowerName);		//하지 이미지 설정
-		if(idLower != -1)
-			idLower = PostureAnalyzer.IMAGE_ID_LOWER_POSTURE[idLower];
-		else
-			idLower = R.drawable.noimage;
-		imageLower.setImageResource(idLower);
-
+		ErgoDatabase database = ErgoDatabase.getInstance();
+		imagePosture.setImageResource(database.getPostureImageID(this, sUpperName, sLowerName));
 
 		Bitmap temp = BitmapFactory.decodeResource(getResources(), R.drawable.tables2);
 		bitmapNormalResult = temp.copy(temp.getConfig(), true);
@@ -137,7 +155,7 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 		markResult(bitmapNormalResult, MARK_SUMMARY_O_POINT_X + MARK_SUMMARY_INTERVAL_X * (4 - iUpperRisk), MARK_SUMMARY_O_POINT_Y + MARK_SUMMARY_INTERVAL_Y * (4 - iLowerRisk));
 		markResult(bitmapTimeResult, MARK_SUMMARY_O_POINT_X + MARK_SUMMARY_INTERVAL_X * (4 - iUpperTimeRisk), MARK_SUMMARY_O_POINT_Y + MARK_SUMMARY_INTERVAL_Y * (4 - iLowerTimeRisk));
 		//상세 결과에 표시
-		markResult(bitmapUpperResult, MARK_UPPER_O_POINT_X + MARK_UPPER_INTERVAL_X * pa.getOrder(sUpperName), MARK_UPPER_O_POINT_Y + MARK_UPPER_INTERVAL_Y * (iLowerRisk - 1));
+		markResult(bitmapUpperResult, MARK_UPPER_O_POINT_X + MARK_UPPER_INTERVAL_X * pa.getOrder(sUpperName), MARK_UPPER_O_POINT_Y + MARK_UPPER_INTERVAL_Y * (iUpperTimeRisk - 1));
 		markResult(bitmapLowerResult, MARK_LOWER_O_POINT_X + MARK_LOWER_INTERVAL_X * pa.getOrder(sLowerName), MARK_LOWER_O_POINT_Y + MARK_LOWER_INTERVAL_Y * (iLowerTimeRisk - 1));
 
 		initializeButtons(buttonSummary);
@@ -200,9 +218,20 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 				setRiskLower();
 				initializeButtons((Button) v);
 				break;
-			case R.id.button_rf1_law:
+			case R.id.button_rf1_save:
+				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+					requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+				save();
+				Toast.makeText(this,"저장되었습니다 -> /storage/emulated/0/Context/",Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.button_rf1_exercise:
+				Intent intent = new Intent(this, PreventionVideo.class);
+				intent.putExtra(PreventionVideo.DANGER_ELBOW, bDangerEl);
+				intent.putExtra(PreventionVideo.DANGER_SHOULDER, bDangerSh);
+				intent.putExtra(PreventionVideo.DANGER_WAIST, bDangerWa);
+				intent.putExtra(PreventionVideo.DANGER_KNEE, bDangerKn);
+				intent.putExtra(PreventionVideo.DANGER_ANKLE, bDangerAn);
+				startActivity(intent);
 				break;
 			default:
 				break;
@@ -210,8 +239,9 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 	}
 
 
-
-	/** 일반 위험 표시 모드로 전환 */
+	/**
+	 * 일반 위험 표시 모드로 전환
+	 */
 	private void setRiskNormal() {
 		setTitle("결과 종합");
 		textUpperRisk.setText("" + iUpperRisk);
@@ -219,7 +249,9 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 		resultView.setImageBitmap(bitmapNormalResult);
 	}
 
-	/** 시간 고려 위험 표시 모드로 전환 */
+	/**
+	 * 시간 고려 위험 표시 모드로 전환
+	 */
 	private void setRiskTime() {
 		setTitle("결과 종합(시간)");
 		textUpperRisk.setText("" + iUpperTimeRisk);
@@ -227,32 +259,45 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 		resultView.setImageBitmap(bitmapTimeResult);
 	}
 
-	/** 상지 위험 표시 모드로 전환 */
+	/**
+	 * 상지 위험 표시 모드로 전환
+	 */
 	private void setRiskUpper() {
 		setTitle("결과 상지");
 		textUpperRisk.setText("" + iUpperTimeRisk);
 		textLowerRisk.setText("" + iLowerTimeRisk);
 		resultView.setImageBitmap(bitmapUpperResult);
+
+		Matrix matrix = new Matrix(resultView.getImageMatrix());
+		matrix.setScale(0.5f, 0.5f);
+		resultView.setImageMatrix(matrix);
 	}
 
-	/** 하지 위험 표시 모드로 전환 */
+	/**
+	 * 하지 위험 표시 모드로 전환
+	 */
 	private void setRiskLower() {
 		setTitle("결과 하지");
 		textUpperRisk.setText("" + iUpperTimeRisk);
 		textLowerRisk.setText("" + iLowerTimeRisk);
 		resultView.setImageBitmap(bitmapLowerResult);
+
+		Matrix matrix = new Matrix(resultView.getImageMatrix());
+		matrix.setScale(0.5f, 0.5f);
+		resultView.setImageMatrix(matrix);
 	}
 
-	/** 그림에 동그라미 표시
+	/**
+	 * 그림에 동그라미 표시
 	 *
 	 * @param src 동그라미를 표시한 그림
-	 * @param x 동그라미 x 위치
-	 * @param y 동그라미 y 위치
+	 * @param x   동그라미 x 위치
+	 * @param y   동그라미 y 위치
 	 */
 	private void markResult(Bitmap src, float x, float y) {
 
 		Canvas canvas = new Canvas(src);
-		float fScale = (float)src.getDensity() / 160f;
+		float fScale = (float) src.getDensity() / 160f;
 
 		Paint paintMark = new Paint();
 		paintMark.setColor(Color.BLUE);
@@ -263,34 +308,51 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 		Logger.debug("Draw: " + (x * fScale) + ", " + (y * fScale) + " -> " + src.getDensity() + ", " + fScale);
 	}
 
-	/** 코멘트 설정 */
+	/**
+	 * 코멘트 설정
+	 */
 	private void setComment() {
-		String str = "상지 : ";
-		if(sUpperName.equals("B0-S0-E45") || sUpperName.equals("B0-S0-E90")) {	//팔꿈치 부담 작업
+
+		String str = "상지: ";
+		if (sUpperName.equals("B0-S0-E45") || sUpperName.equals("B0-S0-E90")) {    //팔꿈치 부담 작업
 			str += getString(R.string.comment_upper_01);
-		} else if(sUpperName.equals("B0-S45-E0") || sUpperName.equals("B0-S45-E90") || sUpperName.equals("B0-S120-E0")) { //어깨 부담 작업
+			bDangerEl = true;
+		} else if (sUpperName.equals("B0-S45-E0") || sUpperName.equals("B0-S45-E90") || sUpperName.equals("B0-S120-E0")) { //어깨 부담 작업
 			str += getString(R.string.comment_upper_02);
-		} else if(sUpperName.equals("B0-S45-E45") || sUpperName.equals("B0-S90-E45") || sUpperName.equals("B0-S90-E90")) { //어깨, 팔꿈치 부담 작업
+			bDangerSh = true;
+		} else if (sUpperName.equals("B0-S45-E45") || sUpperName.equals("B0-S90-E45") || sUpperName.equals("B0-S90-E90")) { //어깨, 팔꿈치 부담 작업
 			str += getString(R.string.comment_upper_03);
-		} else if(sUpperName.equals("B45-S45-E0") || sUpperName.equals("B90-S90-E0")) {	//허리 부담 작업
+			bDangerSh = true;
+			bDangerEl = true;
+		} else if (sUpperName.equals("B45-S45-E0") || sUpperName.equals("B90-S90-E0")) {    //허리 부담 작업
 			str += getString(R.string.comment_upper_04);
-		} else if(sUpperName.equals("B45-S45-E45") || sUpperName.equals("B45-S90-E0") || sUpperName.equals("B45-S90-E45")) { //허리, 어깨 부담 작업
+			bDangerWa = true;
+		} else if (sUpperName.equals("B45-S45-E45") || sUpperName.equals("B45-S90-E0") || sUpperName.equals("B45-S90-E45")) { //허리, 어깨 부담 작업
 			str += getString(R.string.comment_upper_05);
-		} else if(sUpperName.equals("B90-S90-E45")) {
+			bDangerSh = true;
+			bDangerWa = true;
+		} else if (sUpperName.equals("B90-S90-E45")) {
 			str += getString(R.string.comment_upper_06);
+			bDangerWa = true;
+			bDangerEl = true;
 		} else {
 			Logger.warn("Unknown posture name : " + sUpperName);
 		}
-		str += "\n하지 : ";
-		if(sLowerName.equals("KF150") || sLowerName.equals("KF120")) {	//무릎 부담 작업
+		str += "\n하지: ";
+		if (sLowerName.equals("KF150") || sLowerName.equals("KF120")) {    //무릎 부담 작업
 			str += getString(R.string.comment_lower_01);
-		} else if(sLowerName.equals("KF90") || sLowerName.equals("KF60") || sLowerName.equals("KF30") || sLowerName.equals("KNL_1") || sLowerName.equals("KNL_2")) { //무릎, 허리 부담 작업
+			bDangerKn = true;
+		} else if (sLowerName.equals("KF90") || sLowerName.equals("KF60") || sLowerName.equals("KF30") || sLowerName.equals("KNL_1") || sLowerName.equals("KNL_2")) { //무릎, 허리 부담 작업
 			str += getString(R.string.comment_lower_02);
-		} else if(sLowerName.equals("SC0")) { //허리 부담 작업
+			bDangerKn = true;
+			bDangerWa = true;
+		} else if (sLowerName.equals("SC0")) { //허리 부담 작업
 			str += getString(R.string.comment_lower_03);
-		} else if(sLowerName.equals("KF30C")) {	//발목 부담 작업
+			bDangerWa = true;
+		} else if (sLowerName.equals("KF30C")) {    //발목 부담 작업
 			str += getString(R.string.comment_lower_04);
-		} else if(sLowerName.equals("STD") || sLowerName.equals("SC40") || sLowerName.equals("SC20") || sLowerName.equals("SF_CRS")) { //없음
+			bDangerAn = true;
+		} else if (sLowerName.equals("STD") || sLowerName.equals("SC40") || sLowerName.equals("SC20") || sLowerName.equals("SF_CRS")) { //없음
 			str += "부담 없음";
 		} else {
 			Logger.warn("Unknown posture name : " + sLowerName);
@@ -298,7 +360,8 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 		textComment.setText(str);
 	}
 
-	/** 버튼 초기화 및 색상 변경
+	/**
+	 * 버튼 초기화 및 색상 변경
 	 *
 	 * @param v 활성화 할 버튼 객체
 	 */
@@ -316,5 +379,83 @@ public class ResultFinal01 extends AppCompatActivity implements View.OnClickList
 
 		v.setBackgroundColor(Color.GRAY);
 		v.setTextColor(Color.WHITE);
+	}
+
+	private void save() {
+		Logger.debug(sWorker + sCrop + sTask + sSubTask + sLocation + iWorkTime + sAssessor);
+
+		String str = "작업자,지역,작목,작업,세부작업,무게,드는 부위,유지시간,분석자,분석일자,상지자세,상지위험도,상지시간위험도,하지자세,하지위험도,하지시간위험도,종합위험도,종합시간위험도,목젖힘 정도\n";
+		str +=  sWorker + ","		//작업자
+				+ sLocation + ","		//지역
+				+ sCrop + ","		//작목
+				+ sTask + ","		//작업
+				+ sSubTask + ","		//세부작업
+				+ sWeight + ","		//무게
+				+ sActPoint + ","		//드는부위
+				+ iWorkTime + ","		//유지시간
+				+ sAssessor + ","		//분석자
+				+ DateLoader.getToday() + ","		//분석일자
+				+ sUpperName + ","		//상지자세
+				+ iUpperRisk + "," 		//상지위험
+				+ iUpperTimeRisk + "," 	//상지시간
+				+ sLowerName + "," 		//하지자세
+				+ iLowerRisk + "," 		//하지위험
+				+ iLowerTimeRisk + ","	//하지시간
+				+ getCombineRisk(iUpperRisk, iLowerRisk) + ","					//종합위험
+				+ getCombineRisk(iUpperTimeRisk, iLowerTimeRisk) + ","			//종합시간
+				+ sNeckBand;
+
+		FileManager.writeFile("save.csv", str);
+	}
+
+	private int getCombineRisk(int upper, int lower) {
+		int iRisk = 0;
+
+		switch (upper) {
+			case 1:
+				if(lower > 1) {
+					iRisk = 4;
+				} else if(lower == 1) {
+					iRisk = 3;
+				} else {
+					iRisk = 0;
+				}
+				break;
+			case 2:
+				if(lower < 4) {
+					iRisk = 3;
+				} else if(lower == 4) {
+					iRisk = 4;
+				} else {
+					iRisk = 0;
+				}
+				break;
+			case 3:
+				if(lower < 3) {
+					iRisk = 2;
+				} else if(lower == 3) {
+					iRisk = 3;
+				} else if(lower == 4) {
+					iRisk = 4;
+				} else {
+					iRisk = 0;
+				}
+				break;
+			case 4:
+				if(lower > 2) {
+					iRisk = 3;
+				} else if(lower == 2) {
+					iRisk = 2;
+				} else if(lower == 1) {
+					iRisk = 1;
+				} else {
+					iRisk = 0;
+				}
+				break;
+			default:
+				iRisk = 0;
+				break;
+		}
+		return iRisk;
 	}
 }

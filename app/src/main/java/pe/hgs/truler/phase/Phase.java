@@ -29,6 +29,9 @@ public interface Phase {
 	String INFO_LOCATION = "TaskInfo_05";
 	String INFO_WORK_TIME = "TaskInfo_06";
 	String INFO_ASSESSOR = "TaskInfo_07";
+	String INFO_WEIGHT = "TaskInfo_08";
+	String INFO_ACT_POINT = "TaskInfo_09";
+	String INFO_NECK_BAND = "TaskInfo_10";
 
 	String URI_SELECTED_IMAGE = "MainActivity_01";
 

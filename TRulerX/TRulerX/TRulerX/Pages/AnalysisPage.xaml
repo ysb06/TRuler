@@ -2,11 +2,19 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:TRulerX.Pages"
-            x:Class="TRulerX.Pages.AnalysisPage">
+            x:Class="TRulerX.Pages.AnalysisPage" CurrentPageChanged="TabbedPage_CurrentPageChanged">
 
-    <local:TitlePage Title="정보"/>
-    <ContentPage Title="이미지" />
-    <ContentPage Title="관절" />
-    <ContentPage Title="자세" />
-    <ContentPage Title="결과" />
+    <local:BasicInfo Title="정보"/>
+    <ContentPage Title="이미지">
+        <Label Text="먼저 정보를 모두 입력해 주세요" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+    </ContentPage>
+    <ContentPage Title="관절">
+        <Label Text="사진을 찍거나 선택해 주세요" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+    </ContentPage>
+    <ContentPage Title="자세">
+        <Label Text="먼저 관절을 선택해 주세요" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+    </ContentPage>
+    <ContentPage Title="결과">
+        <Label Text="먼저 자세를 선택해 주세요" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+    </ContentPage>
 </TabbedPage>

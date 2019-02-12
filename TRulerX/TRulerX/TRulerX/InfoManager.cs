@@ -42,6 +42,14 @@ namespace TRulerX
         }
         #endregion
 
+        #region User Setting
+        public int PicRotation { get { return intVals[1]; } set { intVals[1] = value; } }
+        public string PicPath { get { return stringVals[9]; } set { stringVals[9] = value; } }
+        #endregion
+
+        #region Joint info. and analsys data
+        #endregion
+
         private InfoManager()
         {
             for (int i = 0; i < 10; i++)
@@ -57,6 +65,16 @@ namespace TRulerX
             {
                 Console.WriteLine(str);
             }
+        }
+
+        /// <summary>
+        /// Reset Manager. Should be use carefully, because it dispose current manager and re-create it.
+        /// </summary>
+        /// <returns></returns>
+        public InfoManager ResetManager()
+        {
+            manager = new InfoManager();
+            return manager;
         }
     }
 }

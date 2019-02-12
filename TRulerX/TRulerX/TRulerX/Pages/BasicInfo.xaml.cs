@@ -44,27 +44,9 @@ namespace TRulerX.Pages
         private void Param9_analyzer_Unfocused(object sender, FocusEventArgs e) { manager.Analyzer = Param9_analyzer.Text; }
         private void Param10_bend_Unfocused(object sender, FocusEventArgs e) { manager.Bend = Param10_bend.SelectedItem.ToString(); }
 
-        private async void Cam_Button_Clicked(object sender, EventArgs e)
+        private void Cam_Button_Clicked(object sender, EventArgs e)
         {
-            //*
-            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-            {
-                await DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
-                return;
-            }
 
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-            {
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
-                Directory = "Sample",
-                Name = "test.jpg"
-            });
-
-            if (file == null)
-                return;
-
-            await DisplayAlert("File Location", file.Path, "OK");
-            //*/
         }
 
         private void Image_Button_Clicked(object sender, EventArgs e)

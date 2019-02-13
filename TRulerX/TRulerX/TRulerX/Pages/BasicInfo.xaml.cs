@@ -13,7 +13,6 @@ namespace TRulerX.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BasicInfo : ContentPage
     {
-        public event EventHandler RequestNextPage;
         private InfoManager manager;
 
         public BasicInfo()
@@ -51,7 +50,8 @@ namespace TRulerX.Pages
 
         private void Image_Button_Clicked(object sender, EventArgs e)
         {
-            RequestNextPage(this, new EventArgs());
+            AnalysisPage master = Parent as AnalysisPage;
+            master.CurrentPage = master.Children[1];
         }
     }
 }

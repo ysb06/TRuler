@@ -14,8 +14,6 @@ namespace TRulerX.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PictureSelection : ContentPage
 	{
-        public event EventHandler RequestNextPage;
-
         InfoManager infoManager;
 		public PictureSelection ()
 		{
@@ -57,14 +55,37 @@ namespace TRulerX.Pages
             TargetImage.Source = ImageSource.FromFile(file.Path);
         }
 
-        private void Gallery_Button_Clicked(object sender, EventArgs e)
-        {
+        //
 
+        private async void Gallery_Button_Clicked(object sender, EventArgs e)
+        {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                return;
+            }
+            var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+            {
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
+            });
+
+
+            if (file == null)
+                return;
+
+            TargetImage.Source = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                file.Dispose();
+                return stream;
+            });
+            // 테스트 필요
         }
 
         private void Next_Button_Clicked(object sender, EventArgs e)
         {
-            RequestNextPage(this, new EventArgs());
+            AnalysisPage master = Parent as AnalysisPage;
+            master.CurrentPage = master.Children[2];
         }
     }
 }

@@ -22,13 +22,18 @@ namespace TRulerX.Pages
 
             manager = InfoManager.GetInfoManager();
 
-            //todo: BasicInfo를 xaml로 넣지 말고 코드로 삽입할 것
+
             //todo: 카메라 부분 완성할 것
 
             for(int i = 0; i < initPages.Length; i++)
             {
                 initPages[i] = Children[i];
             }
+        }
+
+        private void Page_RequestNextPage(object sender, EventArgs e)
+        {
+            
         }
 
         private void TabbedPage_CurrentPageChanged(object sender, EventArgs e)

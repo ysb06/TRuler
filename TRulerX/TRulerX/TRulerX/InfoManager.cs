@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace TRulerX
 {
@@ -31,20 +32,12 @@ namespace TRulerX
         public int Time { get { return intVals[0]; } set { intVals[0] = value; } }
         public string Analyzer { get { return stringVals[7]; } set { stringVals[7] = value; } }
         public string Bend { get { return stringVals[8]; } set { stringVals[8] = value; } }
-
-        public bool IsPhase1Finished
-        {
-            get
-            {
-                if(Time > 0) { return true; }
-                else { return false; }
-            }
-        }
         #endregion
 
         #region User Setting
         public int PicRotation { get { return intVals[1]; } set { intVals[1] = value; } }
         public string PicPath { get { return stringVals[9]; } set { stringVals[9] = value; } }
+        public ImageSource WorkImageSource { get; set; }
         #endregion
 
         #region Joint info. and analsys data

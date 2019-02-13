@@ -29,6 +29,7 @@ namespace TRulerX.Droid
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+            Log.WriteLine(LogPriority.Debug, "TRulerX Debbuger", "Start");
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)

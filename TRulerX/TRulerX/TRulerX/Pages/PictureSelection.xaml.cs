@@ -14,7 +14,9 @@ namespace TRulerX.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PictureSelection : ContentPage
 	{
+        public event NextEventHandler NextRequested;
         InfoManager infoManager;
+
 		public PictureSelection ()
 		{
 			InitializeComponent ();
@@ -27,7 +29,7 @@ namespace TRulerX.Pages
             infoManager.PicRotation = (int)TargetImage.Rotation;
         }
 
-        private async void Camera_Button_Clicked(object sender, EventArgs e)
+        public async void Camera_Button_Clicked(object sender, EventArgs e)
         {
             //*
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
@@ -54,13 +56,20 @@ namespace TRulerX.Pages
             infoManager.PicPath = file.Path;
 
             //저장된 사진을 다시 불러오기
-            TargetImage.Source = ImageSource.FromFile(file.Path);
+            TargetImage.Source = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                file.Dispose();
+                return stream;
+            });
             //이미지 소스를 매니저에 저장할지는 고민해 볼 것
+            infoManager.WorkImageSource = TargetImage.Source;
+            NextRequested(PhasePage.PICTURE_SELECTION, RequestParam.NONE);
         }
 
         //
 
-        private async void Gallery_Button_Clicked(object sender, EventArgs e)
+        public async void Gallery_Button_Clicked(object sender, EventArgs e)
         {
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {
@@ -76,19 +85,21 @@ namespace TRulerX.Pages
             if (file == null)
                 return;
 
+            infoManager.PicPath = file.Path;
+
             TargetImage.Source = ImageSource.FromStream(() =>
             {
                 var stream = file.GetStream();
                 file.Dispose();
                 return stream;
             });
-            // 테스트 필요
+            infoManager.WorkImageSource = TargetImage.Source;
+            NextRequested(PhasePage.PICTURE_SELECTION, RequestParam.NONE);
         }
 
         private void Next_Button_Clicked(object sender, EventArgs e)
         {
-            AnalysisPage master = Parent as AnalysisPage;
-            master.CurrentPage = master.Children[2];
+            
         }
     }
 }

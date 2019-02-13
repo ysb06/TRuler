@@ -50,8 +50,7 @@ namespace TRulerX.Pages
 
         private void Image_Button_Clicked(object sender, EventArgs e)
         {
-            AnalysisPage master = Parent as AnalysisPage;
-            master.CurrentPage = master.Children[1];
+
         }
     }
 }

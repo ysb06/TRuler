@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TRulerX.Pages.PoseConfirmation">
+    
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="test.jpg" Grid.Row="0" Grid.Column="0" Rotation="90"/>
+            <Image Source="noimage.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <Button Text="이전" Grid.Row="1" Grid.Column="1"/>
+            <Button Text="다음" Grid.Row="1" Grid.Column="2"/>
+            <Label Text="상지" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="32" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"/>
+            <Label Text="자세 선택이 올바름니까?" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"/>
+            <Button Text="예" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

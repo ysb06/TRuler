@@ -10,15 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace TRulerX.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class JointSetting : ContentPage
+	public partial class ResultPage : ContentPage
 	{
-		public JointSetting ()
+		public ResultPage ()
 		{
 			InitializeComponent ();
-
-            //사진 비율에 따라 LayoutBound 수정
-            
-            
 		}
 	}
 }

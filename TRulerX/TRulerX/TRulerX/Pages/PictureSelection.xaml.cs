@@ -38,10 +38,12 @@ namespace TRulerX.Pages
 
             var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
             {
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Large,
                 Directory = "Sample",
                 Name = "test.jpg"
             });
+            //4MB 이상의 사진은 메모리 문제를 일이키는 것으로 보임
+            //Large(75%)옵션으로 문제는 없지만 추후 문제가 생길 경우 처리 방안을 생각할 필요가 있음
 
             if (file == null)
                 return;
@@ -53,6 +55,7 @@ namespace TRulerX.Pages
 
             //저장된 사진을 다시 불러오기
             TargetImage.Source = ImageSource.FromFile(file.Path);
+            //이미지 소스를 매니저에 저장할지는 고민해 볼 것
         }
 
         //
@@ -66,7 +69,7 @@ namespace TRulerX.Pages
             }
             var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
             {
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Large
             });
 
 

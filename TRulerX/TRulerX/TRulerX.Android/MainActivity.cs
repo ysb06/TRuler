@@ -6,7 +6,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Util;
+
 using Plugin.CurrentActivity;
+
+
 //using Plugin.Media;
 
 namespace TRulerX.Droid
@@ -31,6 +35,12 @@ namespace TRulerX.Droid
         {
             Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             //base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        public override bool OnTouchEvent(MotionEvent e)
+        {
+            Log.WriteLine(LogPriority.Debug, "TRulerX Debugger", "X: " + e.RawX + ", Y: " + e.RawY);
+            return base.OnTouchEvent(e);
         }
     }
 }

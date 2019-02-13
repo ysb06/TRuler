@@ -5,7 +5,7 @@
              Title="이미지">
     <ContentPage.Content>
         <StackLayout>
-            <Image x:Name="TargetImage" Source="test.jpg"/>
+            <Image x:Name="TargetImage" Source="noimage.png"/>
             
             <Grid>
                 <Grid.RowDefinitions>

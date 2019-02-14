@@ -3,10 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TRulerX.Pages.ResultPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="posture_13_12.png" Grid.Row="0" Grid.Column="0" BackgroundColor="Beige"/>
+                <Label Text="Area" Grid.Row="0" Grid.Column="1" BackgroundColor="Aqua"/>
+                <Label Text="Area" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="LightGreen"/>
+                <Label Text="Area" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="OrangeRed"/>
+                <Label Text="Area" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="LightGoldenrodYellow"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="예방 체조" Grid.Column="0"/>
+                <Button Text="결과 저장" Grid.Column="1"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -4345,26 +4345,26 @@ namespace TRulerX.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f020139
-			public const int avd_hide_password_1 = 2130837817;
+			// aapt resource value: 0x7f020200
+			public const int avd_hide_password_1 = 2130838016;
 			
-			// aapt resource value: 0x7f02013a
-			public const int avd_hide_password_2 = 2130837818;
+			// aapt resource value: 0x7f020201
+			public const int avd_hide_password_2 = 2130838017;
 			
-			// aapt resource value: 0x7f02013b
-			public const int avd_hide_password_3 = 2130837819;
+			// aapt resource value: 0x7f020202
+			public const int avd_hide_password_3 = 2130838018;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
-			// aapt resource value: 0x7f02013c
-			public const int avd_show_password_1 = 2130837820;
+			// aapt resource value: 0x7f020203
+			public const int avd_show_password_1 = 2130838019;
 			
-			// aapt resource value: 0x7f02013d
-			public const int avd_show_password_2 = 2130837821;
+			// aapt resource value: 0x7f020204
+			public const int avd_show_password_2 = 2130838020;
 			
-			// aapt resource value: 0x7f02013e
-			public const int avd_show_password_3 = 2130837822;
+			// aapt resource value: 0x7f020205
+			public const int avd_show_password_3 = 2130838021;
 			
 			// aapt resource value: 0x7f020055
 			public const int design_bottom_navigation_item_background = 2130837589;
@@ -5008,11 +5008,11 @@ namespace TRulerX.Droid
 			// aapt resource value: 0x7f02012a
 			public const int notification_icon_background = 2130837802;
 			
-			// aapt resource value: 0x7f020137
-			public const int notification_template_icon_bg = 2130837815;
+			// aapt resource value: 0x7f0201fe
+			public const int notification_template_icon_bg = 2130838014;
 			
-			// aapt resource value: 0x7f020138
-			public const int notification_template_icon_low_bg = 2130837816;
+			// aapt resource value: 0x7f0201ff
+			public const int notification_template_icon_low_bg = 2130838015;
 			
 			// aapt resource value: 0x7f02012b
 			public const int notification_tile_bg = 2130837803;
@@ -5021,34 +5021,631 @@ namespace TRulerX.Droid
 			public const int notify_panel_notification_icon_bg = 2130837804;
 			
 			// aapt resource value: 0x7f02012d
-			public const int step01 = 2130837805;
+			public const int posture_00_00 = 2130837805;
 			
 			// aapt resource value: 0x7f02012e
-			public const int step02 = 2130837806;
+			public const int posture_00_01 = 2130837806;
 			
 			// aapt resource value: 0x7f02012f
-			public const int step03 = 2130837807;
+			public const int posture_00_02 = 2130837807;
 			
 			// aapt resource value: 0x7f020130
-			public const int step04 = 2130837808;
+			public const int posture_00_03 = 2130837808;
 			
 			// aapt resource value: 0x7f020131
-			public const int step05 = 2130837809;
+			public const int posture_00_04 = 2130837809;
 			
 			// aapt resource value: 0x7f020132
-			public const int step06 = 2130837810;
+			public const int posture_00_05 = 2130837810;
 			
 			// aapt resource value: 0x7f020133
-			public const int step07 = 2130837811;
+			public const int posture_00_06 = 2130837811;
 			
 			// aapt resource value: 0x7f020134
-			public const int test = 2130837812;
+			public const int posture_00_07 = 2130837812;
 			
 			// aapt resource value: 0x7f020135
-			public const int tooltip_frame_dark = 2130837813;
+			public const int posture_00_08 = 2130837813;
 			
 			// aapt resource value: 0x7f020136
-			public const int tooltip_frame_light = 2130837814;
+			public const int posture_00_09 = 2130837814;
+			
+			// aapt resource value: 0x7f020137
+			public const int posture_00_10 = 2130837815;
+			
+			// aapt resource value: 0x7f020138
+			public const int posture_00_11 = 2130837816;
+			
+			// aapt resource value: 0x7f020139
+			public const int posture_00_12 = 2130837817;
+			
+			// aapt resource value: 0x7f02013a
+			public const int posture_01_00 = 2130837818;
+			
+			// aapt resource value: 0x7f02013b
+			public const int posture_01_01 = 2130837819;
+			
+			// aapt resource value: 0x7f02013c
+			public const int posture_01_02 = 2130837820;
+			
+			// aapt resource value: 0x7f02013d
+			public const int posture_01_03 = 2130837821;
+			
+			// aapt resource value: 0x7f02013e
+			public const int posture_01_04 = 2130837822;
+			
+			// aapt resource value: 0x7f02013f
+			public const int posture_01_05 = 2130837823;
+			
+			// aapt resource value: 0x7f020140
+			public const int posture_01_06 = 2130837824;
+			
+			// aapt resource value: 0x7f020141
+			public const int posture_01_07 = 2130837825;
+			
+			// aapt resource value: 0x7f020142
+			public const int posture_01_08 = 2130837826;
+			
+			// aapt resource value: 0x7f020143
+			public const int posture_01_09 = 2130837827;
+			
+			// aapt resource value: 0x7f020144
+			public const int posture_01_10 = 2130837828;
+			
+			// aapt resource value: 0x7f020145
+			public const int posture_01_11 = 2130837829;
+			
+			// aapt resource value: 0x7f020146
+			public const int posture_01_12 = 2130837830;
+			
+			// aapt resource value: 0x7f020147
+			public const int posture_02_00 = 2130837831;
+			
+			// aapt resource value: 0x7f020148
+			public const int posture_02_01 = 2130837832;
+			
+			// aapt resource value: 0x7f020149
+			public const int posture_02_02 = 2130837833;
+			
+			// aapt resource value: 0x7f02014a
+			public const int posture_02_03 = 2130837834;
+			
+			// aapt resource value: 0x7f02014b
+			public const int posture_02_04 = 2130837835;
+			
+			// aapt resource value: 0x7f02014c
+			public const int posture_02_05 = 2130837836;
+			
+			// aapt resource value: 0x7f02014d
+			public const int posture_02_06 = 2130837837;
+			
+			// aapt resource value: 0x7f02014e
+			public const int posture_02_07 = 2130837838;
+			
+			// aapt resource value: 0x7f02014f
+			public const int posture_02_08 = 2130837839;
+			
+			// aapt resource value: 0x7f020150
+			public const int posture_02_09 = 2130837840;
+			
+			// aapt resource value: 0x7f020151
+			public const int posture_02_10 = 2130837841;
+			
+			// aapt resource value: 0x7f020152
+			public const int posture_02_11 = 2130837842;
+			
+			// aapt resource value: 0x7f020153
+			public const int posture_02_12 = 2130837843;
+			
+			// aapt resource value: 0x7f020154
+			public const int posture_03_00 = 2130837844;
+			
+			// aapt resource value: 0x7f020155
+			public const int posture_03_01 = 2130837845;
+			
+			// aapt resource value: 0x7f020156
+			public const int posture_03_02 = 2130837846;
+			
+			// aapt resource value: 0x7f020157
+			public const int posture_03_03 = 2130837847;
+			
+			// aapt resource value: 0x7f020158
+			public const int posture_03_04 = 2130837848;
+			
+			// aapt resource value: 0x7f020159
+			public const int posture_03_05 = 2130837849;
+			
+			// aapt resource value: 0x7f02015a
+			public const int posture_03_06 = 2130837850;
+			
+			// aapt resource value: 0x7f02015b
+			public const int posture_03_07 = 2130837851;
+			
+			// aapt resource value: 0x7f02015c
+			public const int posture_03_08 = 2130837852;
+			
+			// aapt resource value: 0x7f02015d
+			public const int posture_03_09 = 2130837853;
+			
+			// aapt resource value: 0x7f02015e
+			public const int posture_03_10 = 2130837854;
+			
+			// aapt resource value: 0x7f02015f
+			public const int posture_03_11 = 2130837855;
+			
+			// aapt resource value: 0x7f020160
+			public const int posture_03_12 = 2130837856;
+			
+			// aapt resource value: 0x7f020161
+			public const int posture_04_00 = 2130837857;
+			
+			// aapt resource value: 0x7f020162
+			public const int posture_04_01 = 2130837858;
+			
+			// aapt resource value: 0x7f020163
+			public const int posture_04_02 = 2130837859;
+			
+			// aapt resource value: 0x7f020164
+			public const int posture_04_03 = 2130837860;
+			
+			// aapt resource value: 0x7f020165
+			public const int posture_04_04 = 2130837861;
+			
+			// aapt resource value: 0x7f020166
+			public const int posture_04_05 = 2130837862;
+			
+			// aapt resource value: 0x7f020167
+			public const int posture_04_06 = 2130837863;
+			
+			// aapt resource value: 0x7f020168
+			public const int posture_04_07 = 2130837864;
+			
+			// aapt resource value: 0x7f020169
+			public const int posture_04_08 = 2130837865;
+			
+			// aapt resource value: 0x7f02016a
+			public const int posture_04_09 = 2130837866;
+			
+			// aapt resource value: 0x7f02016b
+			public const int posture_04_10 = 2130837867;
+			
+			// aapt resource value: 0x7f02016c
+			public const int posture_04_11 = 2130837868;
+			
+			// aapt resource value: 0x7f02016d
+			public const int posture_04_12 = 2130837869;
+			
+			// aapt resource value: 0x7f02016e
+			public const int posture_05_00 = 2130837870;
+			
+			// aapt resource value: 0x7f02016f
+			public const int posture_05_01 = 2130837871;
+			
+			// aapt resource value: 0x7f020170
+			public const int posture_05_02 = 2130837872;
+			
+			// aapt resource value: 0x7f020171
+			public const int posture_05_03 = 2130837873;
+			
+			// aapt resource value: 0x7f020172
+			public const int posture_05_04 = 2130837874;
+			
+			// aapt resource value: 0x7f020173
+			public const int posture_05_05 = 2130837875;
+			
+			// aapt resource value: 0x7f020174
+			public const int posture_05_06 = 2130837876;
+			
+			// aapt resource value: 0x7f020175
+			public const int posture_05_07 = 2130837877;
+			
+			// aapt resource value: 0x7f020176
+			public const int posture_05_08 = 2130837878;
+			
+			// aapt resource value: 0x7f020177
+			public const int posture_05_09 = 2130837879;
+			
+			// aapt resource value: 0x7f020178
+			public const int posture_05_10 = 2130837880;
+			
+			// aapt resource value: 0x7f020179
+			public const int posture_05_11 = 2130837881;
+			
+			// aapt resource value: 0x7f02017a
+			public const int posture_05_12 = 2130837882;
+			
+			// aapt resource value: 0x7f02017b
+			public const int posture_06_00 = 2130837883;
+			
+			// aapt resource value: 0x7f02017c
+			public const int posture_06_01 = 2130837884;
+			
+			// aapt resource value: 0x7f02017d
+			public const int posture_06_02 = 2130837885;
+			
+			// aapt resource value: 0x7f02017e
+			public const int posture_06_03 = 2130837886;
+			
+			// aapt resource value: 0x7f02017f
+			public const int posture_06_04 = 2130837887;
+			
+			// aapt resource value: 0x7f020180
+			public const int posture_06_05 = 2130837888;
+			
+			// aapt resource value: 0x7f020181
+			public const int posture_06_06 = 2130837889;
+			
+			// aapt resource value: 0x7f020182
+			public const int posture_06_07 = 2130837890;
+			
+			// aapt resource value: 0x7f020183
+			public const int posture_06_08 = 2130837891;
+			
+			// aapt resource value: 0x7f020184
+			public const int posture_06_09 = 2130837892;
+			
+			// aapt resource value: 0x7f020185
+			public const int posture_06_10 = 2130837893;
+			
+			// aapt resource value: 0x7f020186
+			public const int posture_06_11 = 2130837894;
+			
+			// aapt resource value: 0x7f020187
+			public const int posture_06_12 = 2130837895;
+			
+			// aapt resource value: 0x7f020188
+			public const int posture_07_00 = 2130837896;
+			
+			// aapt resource value: 0x7f020189
+			public const int posture_07_01 = 2130837897;
+			
+			// aapt resource value: 0x7f02018a
+			public const int posture_07_02 = 2130837898;
+			
+			// aapt resource value: 0x7f02018b
+			public const int posture_07_03 = 2130837899;
+			
+			// aapt resource value: 0x7f02018c
+			public const int posture_07_04 = 2130837900;
+			
+			// aapt resource value: 0x7f02018d
+			public const int posture_07_05 = 2130837901;
+			
+			// aapt resource value: 0x7f02018e
+			public const int posture_07_06 = 2130837902;
+			
+			// aapt resource value: 0x7f02018f
+			public const int posture_07_07 = 2130837903;
+			
+			// aapt resource value: 0x7f020190
+			public const int posture_07_08 = 2130837904;
+			
+			// aapt resource value: 0x7f020191
+			public const int posture_07_09 = 2130837905;
+			
+			// aapt resource value: 0x7f020192
+			public const int posture_07_10 = 2130837906;
+			
+			// aapt resource value: 0x7f020193
+			public const int posture_07_11 = 2130837907;
+			
+			// aapt resource value: 0x7f020194
+			public const int posture_07_12 = 2130837908;
+			
+			// aapt resource value: 0x7f020195
+			public const int posture_08_00 = 2130837909;
+			
+			// aapt resource value: 0x7f020196
+			public const int posture_08_01 = 2130837910;
+			
+			// aapt resource value: 0x7f020197
+			public const int posture_08_02 = 2130837911;
+			
+			// aapt resource value: 0x7f020198
+			public const int posture_08_03 = 2130837912;
+			
+			// aapt resource value: 0x7f020199
+			public const int posture_08_04 = 2130837913;
+			
+			// aapt resource value: 0x7f02019a
+			public const int posture_08_05 = 2130837914;
+			
+			// aapt resource value: 0x7f02019b
+			public const int posture_08_06 = 2130837915;
+			
+			// aapt resource value: 0x7f02019c
+			public const int posture_08_07 = 2130837916;
+			
+			// aapt resource value: 0x7f02019d
+			public const int posture_08_08 = 2130837917;
+			
+			// aapt resource value: 0x7f02019e
+			public const int posture_08_09 = 2130837918;
+			
+			// aapt resource value: 0x7f02019f
+			public const int posture_08_10 = 2130837919;
+			
+			// aapt resource value: 0x7f0201a0
+			public const int posture_08_11 = 2130837920;
+			
+			// aapt resource value: 0x7f0201a1
+			public const int posture_08_12 = 2130837921;
+			
+			// aapt resource value: 0x7f0201a2
+			public const int posture_09_00 = 2130837922;
+			
+			// aapt resource value: 0x7f0201a3
+			public const int posture_09_01 = 2130837923;
+			
+			// aapt resource value: 0x7f0201a4
+			public const int posture_09_02 = 2130837924;
+			
+			// aapt resource value: 0x7f0201a5
+			public const int posture_09_03 = 2130837925;
+			
+			// aapt resource value: 0x7f0201a6
+			public const int posture_09_04 = 2130837926;
+			
+			// aapt resource value: 0x7f0201a7
+			public const int posture_09_05 = 2130837927;
+			
+			// aapt resource value: 0x7f0201a8
+			public const int posture_09_06 = 2130837928;
+			
+			// aapt resource value: 0x7f0201a9
+			public const int posture_09_07 = 2130837929;
+			
+			// aapt resource value: 0x7f0201aa
+			public const int posture_09_08 = 2130837930;
+			
+			// aapt resource value: 0x7f0201ab
+			public const int posture_09_09 = 2130837931;
+			
+			// aapt resource value: 0x7f0201ac
+			public const int posture_09_10 = 2130837932;
+			
+			// aapt resource value: 0x7f0201ad
+			public const int posture_09_11 = 2130837933;
+			
+			// aapt resource value: 0x7f0201ae
+			public const int posture_09_12 = 2130837934;
+			
+			// aapt resource value: 0x7f0201af
+			public const int posture_10_00 = 2130837935;
+			
+			// aapt resource value: 0x7f0201b0
+			public const int posture_10_01 = 2130837936;
+			
+			// aapt resource value: 0x7f0201b1
+			public const int posture_10_02 = 2130837937;
+			
+			// aapt resource value: 0x7f0201b2
+			public const int posture_10_03 = 2130837938;
+			
+			// aapt resource value: 0x7f0201b3
+			public const int posture_10_04 = 2130837939;
+			
+			// aapt resource value: 0x7f0201b4
+			public const int posture_10_05 = 2130837940;
+			
+			// aapt resource value: 0x7f0201b5
+			public const int posture_10_06 = 2130837941;
+			
+			// aapt resource value: 0x7f0201b6
+			public const int posture_10_07 = 2130837942;
+			
+			// aapt resource value: 0x7f0201b7
+			public const int posture_10_08 = 2130837943;
+			
+			// aapt resource value: 0x7f0201b8
+			public const int posture_10_09 = 2130837944;
+			
+			// aapt resource value: 0x7f0201b9
+			public const int posture_10_10 = 2130837945;
+			
+			// aapt resource value: 0x7f0201ba
+			public const int posture_10_11 = 2130837946;
+			
+			// aapt resource value: 0x7f0201bb
+			public const int posture_10_12 = 2130837947;
+			
+			// aapt resource value: 0x7f0201bc
+			public const int posture_11_00 = 2130837948;
+			
+			// aapt resource value: 0x7f0201bd
+			public const int posture_11_01 = 2130837949;
+			
+			// aapt resource value: 0x7f0201be
+			public const int posture_11_02 = 2130837950;
+			
+			// aapt resource value: 0x7f0201bf
+			public const int posture_11_03 = 2130837951;
+			
+			// aapt resource value: 0x7f0201c0
+			public const int posture_11_04 = 2130837952;
+			
+			// aapt resource value: 0x7f0201c1
+			public const int posture_11_05 = 2130837953;
+			
+			// aapt resource value: 0x7f0201c2
+			public const int posture_11_06 = 2130837954;
+			
+			// aapt resource value: 0x7f0201c3
+			public const int posture_11_07 = 2130837955;
+			
+			// aapt resource value: 0x7f0201c4
+			public const int posture_11_08 = 2130837956;
+			
+			// aapt resource value: 0x7f0201c5
+			public const int posture_11_09 = 2130837957;
+			
+			// aapt resource value: 0x7f0201c6
+			public const int posture_11_10 = 2130837958;
+			
+			// aapt resource value: 0x7f0201c7
+			public const int posture_11_11 = 2130837959;
+			
+			// aapt resource value: 0x7f0201c8
+			public const int posture_11_12 = 2130837960;
+			
+			// aapt resource value: 0x7f0201c9
+			public const int posture_12_00 = 2130837961;
+			
+			// aapt resource value: 0x7f0201ca
+			public const int posture_12_01 = 2130837962;
+			
+			// aapt resource value: 0x7f0201cb
+			public const int posture_12_02 = 2130837963;
+			
+			// aapt resource value: 0x7f0201cc
+			public const int posture_12_03 = 2130837964;
+			
+			// aapt resource value: 0x7f0201cd
+			public const int posture_12_04 = 2130837965;
+			
+			// aapt resource value: 0x7f0201ce
+			public const int posture_12_05 = 2130837966;
+			
+			// aapt resource value: 0x7f0201cf
+			public const int posture_12_06 = 2130837967;
+			
+			// aapt resource value: 0x7f0201d0
+			public const int posture_12_07 = 2130837968;
+			
+			// aapt resource value: 0x7f0201d1
+			public const int posture_12_08 = 2130837969;
+			
+			// aapt resource value: 0x7f0201d2
+			public const int posture_12_09 = 2130837970;
+			
+			// aapt resource value: 0x7f0201d3
+			public const int posture_12_10 = 2130837971;
+			
+			// aapt resource value: 0x7f0201d4
+			public const int posture_12_11 = 2130837972;
+			
+			// aapt resource value: 0x7f0201d5
+			public const int posture_12_12 = 2130837973;
+			
+			// aapt resource value: 0x7f0201d6
+			public const int posture_13_00 = 2130837974;
+			
+			// aapt resource value: 0x7f0201d7
+			public const int posture_13_01 = 2130837975;
+			
+			// aapt resource value: 0x7f0201d8
+			public const int posture_13_02 = 2130837976;
+			
+			// aapt resource value: 0x7f0201d9
+			public const int posture_13_03 = 2130837977;
+			
+			// aapt resource value: 0x7f0201da
+			public const int posture_13_04 = 2130837978;
+			
+			// aapt resource value: 0x7f0201db
+			public const int posture_13_05 = 2130837979;
+			
+			// aapt resource value: 0x7f0201dc
+			public const int posture_13_06 = 2130837980;
+			
+			// aapt resource value: 0x7f0201dd
+			public const int posture_13_07 = 2130837981;
+			
+			// aapt resource value: 0x7f0201de
+			public const int posture_13_08 = 2130837982;
+			
+			// aapt resource value: 0x7f0201df
+			public const int posture_13_09 = 2130837983;
+			
+			// aapt resource value: 0x7f0201e0
+			public const int posture_13_10 = 2130837984;
+			
+			// aapt resource value: 0x7f0201e1
+			public const int posture_13_11 = 2130837985;
+			
+			// aapt resource value: 0x7f0201e2
+			public const int posture_13_12 = 2130837986;
+			
+			// aapt resource value: 0x7f0201e3
+			public const int step01 = 2130837987;
+			
+			// aapt resource value: 0x7f0201e4
+			public const int step02 = 2130837988;
+			
+			// aapt resource value: 0x7f0201e5
+			public const int step03 = 2130837989;
+			
+			// aapt resource value: 0x7f0201e6
+			public const int step04 = 2130837990;
+			
+			// aapt resource value: 0x7f0201e7
+			public const int step05 = 2130837991;
+			
+			// aapt resource value: 0x7f0201e8
+			public const int step06 = 2130837992;
+			
+			// aapt resource value: 0x7f0201e9
+			public const int step07 = 2130837993;
+			
+			// aapt resource value: 0x7f0201ea
+			public const int tables2 = 2130837994;
+			
+			// aapt resource value: 0x7f0201eb
+			public const int tableuv2l = 2130837995;
+			
+			// aapt resource value: 0x7f0201ec
+			public const int tableuv2u = 2130837996;
+			
+			// aapt resource value: 0x7f0201ed
+			public const int test = 2130837997;
+			
+			// aapt resource value: 0x7f0201ee
+			public const int tooltip_frame_dark = 2130837998;
+			
+			// aapt resource value: 0x7f0201ef
+			public const int tooltip_frame_light = 2130837999;
+			
+			// aapt resource value: 0x7f0201f0
+			public const int upper101 = 2130838000;
+			
+			// aapt resource value: 0x7f0201f1
+			public const int upper102 = 2130838001;
+			
+			// aapt resource value: 0x7f0201f2
+			public const int upper103 = 2130838002;
+			
+			// aapt resource value: 0x7f0201f3
+			public const int upper104 = 2130838003;
+			
+			// aapt resource value: 0x7f0201f4
+			public const int upper105 = 2130838004;
+			
+			// aapt resource value: 0x7f0201f5
+			public const int upper106 = 2130838005;
+			
+			// aapt resource value: 0x7f0201f6
+			public const int upper107 = 2130838006;
+			
+			// aapt resource value: 0x7f0201f7
+			public const int upper108 = 2130838007;
+			
+			// aapt resource value: 0x7f0201f8
+			public const int upper109 = 2130838008;
+			
+			// aapt resource value: 0x7f0201f9
+			public const int upper110 = 2130838009;
+			
+			// aapt resource value: 0x7f0201fa
+			public const int upper111 = 2130838010;
+			
+			// aapt resource value: 0x7f0201fb
+			public const int upper112 = 2130838011;
+			
+			// aapt resource value: 0x7f0201fc
+			public const int upper113 = 2130838012;
+			
+			// aapt resource value: 0x7f0201fd
+			public const int upper114 = 2130838013;
 			
 			static Drawable()
 			{

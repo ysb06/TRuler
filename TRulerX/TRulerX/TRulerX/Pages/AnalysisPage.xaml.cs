@@ -9,10 +9,10 @@ using Xamarin.Forms.Xaml;
 
 namespace TRulerX.Pages
 {
-    public delegate void NextEventHandler(PhasePage page, RequestParam param);
+    public delegate void TRulerEventHandler(PhasePage page, RequestParam param);
 
     public enum PhasePage { BASIC_INFO, PICTURE_SELECTION, JOINT_SETTING, POSE_CONFIRMATION, RESULT }
-    public enum RequestParam { NONE, RUN_CAMERA, RUN_GALLERY }
+    public enum RequestParam { NONE, ACTIVATE_NEXT, CANCEL_ACTIVATION }
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AnalysisPage : TabbedPage
@@ -23,6 +23,7 @@ namespace TRulerX.Pages
         private PictureSelection P2_PictureSelection;
         private JointSetting P3_JointSetting;
         private PoseConfirmation P4_PoseConfirmation;
+        private Page temp;
         private ResultPage P5_Result;
 
         public bool Phase1Activated { get; private set; }
@@ -52,7 +53,8 @@ namespace TRulerX.Pages
             NavigationPage.SetHasNavigationBar(this, false);
             manager = InfoManager.GetInfoManager();
 
-            P2_PictureSelection.NextRequested += Page_NextRequested;
+            P2_PictureSelection.ProgressStateChanged += Page_NextRequested;
+            P3_JointSetting.ProgressStateChanged += Page_NextRequested;
         }
 
         private void Page_NextRequested(PhasePage page, RequestParam param)
@@ -66,6 +68,23 @@ namespace TRulerX.Pages
                         Phase3Activated = true;
                     }
                     break;
+                case PhasePage.JOINT_SETTING:
+                    if(!Phase4Activated)
+                    {
+                        switch(param)
+                        {
+                            case RequestParam.ACTIVATE_NEXT:
+                                temp = Children[3];
+                                Children[3] = P4_PoseConfirmation;
+                                Phase4Activated = true;
+                                break;
+                            case RequestParam.CANCEL_ACTIVATION:
+                                Children[3] = temp;
+                                Phase4Activated = false;
+                                break;
+                        }
+                    }
+                    break;
             }
         }
 
@@ -73,10 +92,6 @@ namespace TRulerX.Pages
         {
             Debug.WriteLine("Count: " + Children.Count);
             Debug.WriteLine("Current: " + CurrentPage);
-            if(Children.Count >= 2 && CurrentPage == Children[2])
-            {
-                P3_JointSetting.JointSetting_Focused(this, new FocusEventArgs(this, true));
-            }
         }
        
     }

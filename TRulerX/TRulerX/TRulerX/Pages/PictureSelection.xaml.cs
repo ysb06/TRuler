@@ -14,7 +14,7 @@ namespace TRulerX.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PictureSelection : ContentPage
 	{
-        public event NextEventHandler NextRequested;
+        public event TRulerEventHandler ProgressStateChanged;
         InfoManager infoManager;
 
 		public PictureSelection ()
@@ -64,7 +64,7 @@ namespace TRulerX.Pages
             });
             //이미지 소스를 매니저에 저장할지는 고민해 볼 것
             infoManager.WorkImageSource = TargetImage.Source;
-            NextRequested(PhasePage.PICTURE_SELECTION, RequestParam.NONE);
+            ProgressStateChanged(PhasePage.PICTURE_SELECTION, RequestParam.ACTIVATE_NEXT);
         }
 
         //
@@ -94,7 +94,7 @@ namespace TRulerX.Pages
                 return stream;
             });
             infoManager.WorkImageSource = TargetImage.Source;
-            NextRequested(PhasePage.PICTURE_SELECTION, RequestParam.NONE);
+            ProgressStateChanged(PhasePage.PICTURE_SELECTION, RequestParam.NONE);
         }
 
         private void Next_Button_Clicked(object sender, EventArgs e)

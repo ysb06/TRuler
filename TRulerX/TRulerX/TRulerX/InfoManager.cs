@@ -41,6 +41,7 @@ namespace TRulerX
         #endregion
 
         #region Joint info. and analsys data
+        public Point[] JointPoints { get; set; }
         #endregion
 
         private InfoManager()

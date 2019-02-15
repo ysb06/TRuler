@@ -15,8 +15,11 @@ namespace TRulerX.Pages
 	public partial class PoseConfirmation : ContentPage
 	{
         InfoManager manager;
+        private bool IsUpperSelecting = false;
+        RiskAnalyzer analyzer;
 
-		public PoseConfirmation ()
+
+        public PoseConfirmation ()
 		{
 			InitializeComponent ();
             Appearing += PoseConfirmation_Appearing;
@@ -33,15 +36,56 @@ namespace TRulerX.Pages
             }
 
             Skeleton skeleton = new Skeleton(manager.JointPoints);
-            RiskAnalyzer analyzer = new RiskAnalyzer(skeleton);
+            analyzer = new RiskAnalyzer(skeleton);
 
             Debug.WriteLine("B: " + skeleton.BackAngle + " -> " + skeleton.BackAngleGroup);
             Debug.WriteLine("S: " + skeleton.ShoulderAngle + " -> " + skeleton.ShoulderAngleGroup);
             Debug.WriteLine("E: " + skeleton.ElbowAngle + " -> " + skeleton.ElbowAngleGroup);
             Debug.WriteLine("A: " + skeleton.AnkleAngle + " -> " + skeleton.AnkleAngleGroup);
 
-            Debug.WriteLine("Upper: " + analyzer.UpperPoseRisk);
-            Debug.WriteLine("Lower: " + analyzer.LowerPoseRisk);
+            Debug.WriteLine("Upper: " + analyzer.Upper_Posture);
+            Debug.WriteLine("Lower: " + analyzer.Lower_Posture);
+            
+        }
+
+        private void Prev_Button_Clicked(object sender, EventArgs e)
+        {
+            if(IsUpperSelecting)
+            {
+                analyzer.SwitchToPrev(PostureType.Upper);
+                PosePic.Source = ImageSource.FromFile(analyzer.GetUpperPosturePath());
+            }
+            else
+            {
+                analyzer.SwitchToPrev(PostureType.Lower);
+                PosePic.Source = ImageSource.FromFile(analyzer.GetCompletePosturePath());
+            }
+        }
+
+        private void Next_Button_Clicked(object sender, EventArgs e)
+        {
+            if (IsUpperSelecting)
+            {
+                analyzer.SwitchToNext(PostureType.Upper);
+                PosePic.Source = ImageSource.FromFile(analyzer.GetUpperPosturePath());
+            }
+            else
+            {
+                analyzer.SwitchToNext(PostureType.Lower);
+                PosePic.Source = ImageSource.FromFile(analyzer.GetCompletePosturePath());
+            }
+        }
+
+        private void Yes_Button_Clicked(object sender, EventArgs e)
+        {
+            if(IsUpperSelecting)
+            {
+                IsUpperSelecting = false;
+            }
+            else
+            {
+                //Go next!!
+            }
         }
     }
 }

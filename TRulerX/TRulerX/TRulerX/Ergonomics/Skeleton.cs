@@ -16,7 +16,7 @@ namespace TRulerX.Ergonomics
         {
             get
             {
-                return GetAngleGroup(BackAngle);
+                return GetUpperAngleGroup(BackAngle);
             }
         }
         public double ShoulderAngle { get; private set; }
@@ -24,7 +24,7 @@ namespace TRulerX.Ergonomics
         {
             get
             {
-                return GetAngleGroup(ShoulderAngle);
+                return GetUpperAngleGroup(ShoulderAngle);
             }
         }
         public double ElbowAngle { get; private set; }
@@ -32,17 +32,17 @@ namespace TRulerX.Ergonomics
         {
             get
             {
-                return GetAngleGroup(ElbowAngle);
+                return GetUpperAngleGroup(ElbowAngle);
             }
         }
         #endregion
-        #region
+        #region 하지 각도
         public double AnkleAngle { get; private set; }
         public int AnkleAngleGroup
         {
             get
             {
-                return GetAngleGroup(AnkleAngle);
+                return GetLowerAngleGroup(AnkleAngle);
             }
         }
         #endregion
@@ -54,8 +54,8 @@ namespace TRulerX.Ergonomics
 
             BackAngle = 180 + GetAngle(Points[1], points[4], points[5]);
             ShoulderAngle = GetAngle(Points[4], points[1], points[2]);
-            ElbowAngle = -GetAngle(Points[1], points[2], points[3]);
-            AnkleAngle = 180 - GetAngle(Points[4], points[5], points[6]);
+            ElbowAngle = 90 + GetAngle(Points[1], points[2], points[3]);
+            AnkleAngle = GetAngle(Points[4], points[5], points[6]);
         }
 
         public double GetAngle(Point j1, Point midJ, Point j2)
@@ -74,11 +74,23 @@ namespace TRulerX.Ergonomics
             {
                 return 0;
             }
-            else if(angle >= 22.5 && angle < 67.5)
+            else if (angle >= -45 && angle < 15)
+            {
+                return 30;
+            }
+            else if(angle >= 15 && angle < 52.5)
             {
                 return 45;
             }
-            else if(angle >= 67.5 && angle < 107.5)
+            else if (angle >= 52.5 && angle < 67.5)
+            {
+                return 60;
+            }
+            else if (angle >= 67.5 && angle < 75)
+            {
+                return 71;
+            }
+            else if(angle >= 75 && angle < 107.5)
             {
                 return 90;
             }
@@ -98,6 +110,62 @@ namespace TRulerX.Ergonomics
             {
                 Debug.WriteLine("Warning: No angle group.");
                 return -1;
+            }
+        }
+
+        private int GetUpperAngleGroup(double angle)
+        {
+            if (angle >= -22.5 && angle < 22.5)
+            {
+                return 0;
+            }
+            else if (angle >= 22.5 && angle < 67.5)
+            {
+                return 45;
+            }
+            else if (angle >= 67.5 && angle < 125)
+            {
+                return 90;
+            }
+            else
+            {
+                return GetAngleGroup(angle);
+            }
+        }
+
+        private int GetLowerAngleGroup(double angle)
+        {
+            if (angle >= -22.5 && angle < 15)
+            {
+                return 0;
+            }
+            else if (angle >= 15 && angle < 45)
+            {
+                return 30;
+            }
+            else if (angle >= 45 && angle < 67.5)
+            {
+                return 60;
+            }
+            else if (angle >= 67.5 && angle < 105)
+            {
+                return 90;
+            }
+            else if (angle >= 105 && angle < 135)
+            {
+                return 120;
+            }
+            else if (angle >= 135 && angle < 165)
+            {
+                return 150;
+            }
+            else if (angle >= 165 && angle < 200)
+            {
+                return 180;
+            }
+            else
+            {
+                return GetAngleGroup(angle);
             }
         }
     }

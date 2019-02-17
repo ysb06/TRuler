@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:components="clr-namespace:TRulerX.Components"
+             x:Class="TRulerX.Phase.JointSetting"
+             Title="관절">
+    
+    <ContentPage.Content>
+        <Grid RowSpacing="0" ColumnSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <AbsoluteLayout>
+                <Image x:Name="WorkImage" Source="noimage.png" Margin="10" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1.3, 1" AbsoluteLayout.LayoutFlags="All"/>
+                <Label x:Name="GuideText" Text="머리를 선택해 주세요" Margin="20, 20, 0 , 0" TextColor="Red" BackgroundColor="White"/>
+                <Image x:Name="GuideImage" Source="step01.png" AbsoluteLayout.LayoutBounds="1, 0.02, 120, 120" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                <skia:SKCanvasView x:Name="CanvasPlate" Margin="10" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1.3, 1" AbsoluteLayout.LayoutFlags="All">
+                    <skia:SKCanvasView.Effects>
+                        <components:TouchEffect Capture="True" TouchAction="TouchEffect_TouchAction"/>
+                    </skia:SKCanvasView.Effects>
+                </skia:SKCanvasView>
+            </AbsoluteLayout>
+            <Grid Grid.Row="1" RowSpacing="0" ColumnSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="다시 선택" Grid.Column="0" Clicked="Reset_Button_Clicked"/>
+                <Button Text="다음 단계로" Grid.Column="1" Clicked="Next_Button_Clicked"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

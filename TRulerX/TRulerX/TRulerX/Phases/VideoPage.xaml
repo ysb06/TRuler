@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:video="clr-namespace:FormsVideoLibrary"
+             x:Class="TRulerX.Phase.VideoPage"
+             Title="예방 동영상">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <video:VideoPlayer x:Name="VideoPlayer1" AutoPlay="False"  Grid.Row="0" Grid.Column="0">
+                <video:VideoPlayer.Source>
+                    <video:ResourceVideoSource>
+                        <video:ResourceVideoSource.Path>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Videos/iOSApiVideo.mp4" />
+                                <On Platform="Android" Value="AndroidApiVideo.mp4" />
+                                <On Platform="UWP" Value="Videos/UWPApiVideo.mp4" />
+                            </OnPlatform>
+                        </video:ResourceVideoSource.Path>
+                    </video:ResourceVideoSource>
+                </video:VideoPlayer.Source>
+            </video:VideoPlayer>
+            <video:VideoPlayer x:Name="VideoPlayer2" AutoPlay="False" Grid.Row="0" Grid.Column="1">
+                <video:VideoPlayer.Source>
+                    <video:ResourceVideoSource>
+                        <video:ResourceVideoSource.Path>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Videos/iOSApiVideo.mp4" />
+                                <On Platform="Android" Value="AndroidApiVideo.mp4" />
+                                <On Platform="UWP" Value="Videos/UWPApiVideo.mp4" />
+                            </OnPlatform>
+                        </video:ResourceVideoSource.Path>
+                    </video:ResourceVideoSource>
+                </video:VideoPlayer.Source>
+            </video:VideoPlayer>
+
+            <Button x:Name="Player1Controller" Text="재생" Grid.Row="1" Grid.Column="0" Clicked="PlayControlButton_Clicked">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="VideoButtonStates">
+                        <VisualState x:Name="Stop">
+                            <VisualState.Setters>
+                                <Setter Property="Text" Value="재생"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Play">
+                            <VisualState.Setters>
+                                <Setter Property="Text" Value="정지"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+
+            <Button x:Name="Player2Controller" Text="재생" Grid.Row="1" Grid.Column="1" Clicked="PlayControlButton_Clicked">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="VideoButtonStates">
+                        <VisualState x:Name="Stop">
+                            <VisualState.Setters>
+                                <Setter Property="Text" Value="재생"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Play">
+                            <VisualState.Setters>
+                                <Setter Property="Text" Value="정지"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+
+            <!-- 목 동영상 버튼-->
+            <ImageButton x:Name="NeckButton" Source="video_button_neck.png" BorderColor="Red" 
+                         HorizontalOptions="Center" VerticalOptions="Center" Aspect="Fill"
+                         Grid.Row="2" Grid.Column="0" Clicked="BodypartButton_Clicked">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="VideoButtonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="0"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Target">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="1"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+
+            <!-- 어깨 동영상 버튼-->
+            <ImageButton x:Name="ShoulderButton" Source="video_button_shoulder.png" BorderColor="Red" 
+                         HorizontalOptions="Center" VerticalOptions="Center" Aspect="Fill"
+                         Grid.Row="2" Grid.Column="1" Clicked="BodypartButton_Clicked">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="VideoButtonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="0"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Target">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="1"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+
+            <!-- 손 동영상 버튼-->
+            <ImageButton x:Name="HandButton" Source="video_button_hand.png" BorderColor="Red" 
+                         HorizontalOptions="Center" VerticalOptions="Center" Aspect="Fill"
+                         Grid.Row="3" Grid.Column="0" Clicked="BodypartButton_Clicked">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="VideoButtonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="0"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Target">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="1"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+
+            <!-- 허리 동영상 버튼-->
+            <ImageButton x:Name="BackButton" Source="video_button_waist.png" BorderColor="Red" 
+                         HorizontalOptions="Center" VerticalOptions="Center" Aspect="Fill"
+                         Grid.Row="3" Grid.Column="1" Clicked="BodypartButton_Clicked">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="VideoButtonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="0"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Target">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="1"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+            
+            <!-- 다리(무릎) 동영상 버튼-->
+            <ImageButton x:Name="LegButton" Source="video_button_ankle.png" BorderColor="Red" 
+                         HorizontalOptions="Center" VerticalOptions="Center" Aspect="Fill"
+                         Grid.Row="4" Grid.Column="0" Clicked="BodypartButton_Clicked">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="VideoButtonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="0"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Target">
+                            <VisualState.Setters>
+                                <Setter Property="BorderWidth" Value="1"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

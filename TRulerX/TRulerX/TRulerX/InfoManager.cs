@@ -43,12 +43,12 @@ namespace TRulerX
         #region Joint info. and analsys data
         public Point[] JointPoints { get; set; }
 
-        public int UpperRisk = 0;
-        public int LowerRisk = 0;
-        public int UpperTimeRisk = 0;
-        public int LowerTimeRisk = 0;
+        public int UpperRisk = 1;
+        public int LowerRisk = 1;
+        public int UpperTimeRisk = 1;
+        public int LowerTimeRisk = 1;
 
-        public string CompletePosturePicturePath = "";
+        public string CompletePosturePicturePath = "posture_02_02.png";
         #endregion
 
         private InfoManager()

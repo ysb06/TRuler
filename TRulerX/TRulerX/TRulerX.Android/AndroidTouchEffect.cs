@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Xamarin.Forms;
-using TRulerX;
+using TRulerX.Components;
 using Xamarin.Forms.Platform.Android;
 using TRulerX.Droid;
 using Android.Util;

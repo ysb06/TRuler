@@ -1,7 +1,7 @@
 ﻿using System;
+using TRulerX.Phase;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using TRulerX.Pages;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace TRulerX
@@ -13,6 +13,7 @@ namespace TRulerX
             InitializeComponent();
 
             MainPage = new NavigationPage(new TitlePage());
+            //MainPage = new VideoPage(null);
         }
 
         protected override void OnStart()

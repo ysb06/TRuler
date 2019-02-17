@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TRulerX.Phase.BasicInfo"
+             Title="정보">
+    
+    <ContentPage.Content>
+        <Grid RowSpacing="0" ColumnSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            
+            <ScrollView Grid.Row="0">
+                <Grid Margin="0, 25, 25, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <Label Text="작업자" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="지역" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="작목" Grid.Row="2" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="작업" Grid.Row="3" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="세부작업" Grid.Row="4" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="드는 무게" Grid.Row="5" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="드는 부위" Grid.Row="6" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="유지시간" Grid.Row="7" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="분석자" Grid.Row="8" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="목젖힘 정도" Grid.Row="9" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Entry x:Name="Param1_worker" Grid.Row="0" Grid.Column="1" ReturnType="Next" Completed="Param1_worker_Completed" Unfocused="Param1_worker_Unfocused"/>
+                    <Entry x:Name="Param2_location" Grid.Row="1" Grid.Column="1" ReturnType="Next" Completed="Param2_location_Completed" Unfocused="Param2_location_Unfocused"/>
+                    <Entry x:Name="Param3_crop" Grid.Row="2" Grid.Column="1" ReturnType="Next" Completed="Param3_crop_Completed" Unfocused="Param3_crop_Unfocused"/>
+                    <Entry x:Name="Param4_work" Grid.Row="3" Grid.Column="1" ReturnType="Next" Completed="Param4_work_Completed" Unfocused="Param4_work_Unfocused"/>
+                    <Entry x:Name="Param5_workDetailed" Grid.Row="4" Grid.Column="1" ReturnType="Next" Completed="Param5_workDetailed_Completed" Unfocused="Param5_workDetailed_Unfocused"/>
+                    <Entry x:Name="Param6_weight" Grid.Row="5" Grid.Column="1" ReturnType="Next" Completed="Param6_weight_Completed" Unfocused="Param6_weight_Unfocused"/>
+                    <Entry x:Name="Param7_grab" Grid.Row="6" Grid.Column="1" ReturnType="Next" Completed="Param7_grab_Completed" Unfocused="Param7_grab_Unfocused"/>
+                    <StackLayout Orientation="Horizontal" Grid.Row="7" Grid.Column="1">
+                        <Entry x:Name="Param8_time" HorizontalOptions="FillAndExpand" Keyboard="Numeric" ReturnType="Next" Completed="Param8_time_Completed" Unfocused="Param8_time_Unfocused"/>
+                        <Label Text="분(min.)" Margin="10, 0, 10, 0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </StackLayout>
+                    <Entry x:Name="Param9_analyzer" Grid.Row="8" Grid.Column="1" ReturnType="Next" Completed="Param9_analyzer_Completed" Unfocused="Param9_analyzer_Unfocused"/>
+                    <Picker x:Name="Param10_bend" Title="선택하세요" Grid.Row="9" Grid.Column="1" Unfocused="Param10_bend_Unfocused">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>과도한 젖힘</x:String>
+                                <x:String>보통 젖힘</x:String>
+                                <x:String>없음</x:String>
+                                <x:String>보통 숙임</x:String>
+                                <x:String>과도한 숙임</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Grid>
+            </ScrollView>
+            <Button Text="입력 완료" Grid.Row="1" Clicked="Cam_Button_Clicked"/>
+            <!-- 일단 바로 가기는 삭제
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="카메라 촬영" Grid.Column="0" Clicked="Cam_Button_Clicked"/>
+                <Button Text="이미지 선택" Grid.Column="1" Clicked="Image_Button_Clicked"/>
+            </Grid>
+            -->
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

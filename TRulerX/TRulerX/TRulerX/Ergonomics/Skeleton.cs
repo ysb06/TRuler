@@ -52,20 +52,31 @@ namespace TRulerX.Ergonomics
         {
             Points = points;
 
-            BackAngle = 180 + GetAngle(Points[1], points[4], points[5]);
+            BackAngle = 180 - GetAngle(Points[1], points[4], points[5]);
             ShoulderAngle = GetAngle(Points[4], points[1], points[2]);
-            ElbowAngle = 90 + GetAngle(Points[1], points[2], points[3]);
+            ElbowAngle = 180 - GetAngle(Points[1], points[2], points[3]);
             AnkleAngle = GetAngle(Points[4], points[5], points[6]);
         }
 
-        public double GetAngle(Point j1, Point midJ, Point j2)
+        public static double GetAngle(Point j1, Point midJ, Point j2)
         {
             double x1 = j1.X - midJ.X;
             double y1 = j1.Y - midJ.Y;
             double x2 = j2.Y - midJ.X;
             double y2 = j2.Y - midJ.Y;
 
-            return Math.Atan2(y1 * x2 - x1 * y2, x1 * x2 + y1 * y2) * 180 / Math.PI;
+            //return Math.Atan2(y1 * x2 - x1 * y2, x1 * x2 + y1 * y2) * 180 / Math.PI;
+            return Math.Acos((PLenP(midJ, j1) + PLenP(midJ, j2) - PLenP(j1, j2)) / (2 * PLen(midJ, j1) * PLen(midJ, j2))) * 180 / Math.PI;
+        }
+
+        private static double PLen(Point p1, Point p2)
+        {
+            return Math.Sqrt(Math.Pow((p1.X - p2.X), 2) + Math.Pow((p1.Y - p2.Y), 2));
+        }
+
+        private static double PLenP(Point p1, Point p2)
+        {
+            return Math.Pow((p1.X - p2.X), 2) + Math.Pow((p1.Y - p2.Y), 2);
         }
 
         private int GetAngleGroup(double angle)
@@ -108,6 +119,7 @@ namespace TRulerX.Ergonomics
             }
             else
             {
+                
                 Debug.WriteLine("Warning: No angle group.");
                 return -1;
             }
@@ -143,19 +155,19 @@ namespace TRulerX.Ergonomics
             {
                 return 30;
             }
-            else if (angle >= 45 && angle < 67.5)
+            else if (angle >= 45 && angle < 75)
             {
                 return 60;
             }
-            else if (angle >= 67.5 && angle < 105)
+            else if (angle >= 75 && angle < 107.5)
             {
                 return 90;
             }
-            else if (angle >= 105 && angle < 135)
+            else if (angle >= 107.5 && angle < 137.5)
             {
-                return 120;
+                return 125;
             }
-            else if (angle >= 135 && angle < 165)
+            else if (angle >= 137.5 && angle < 165)
             {
                 return 150;
             }
